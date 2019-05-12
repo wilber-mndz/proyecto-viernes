@@ -1,0 +1,273 @@
+// Variables
+$primary: #0048AA
+$text: #EEEEEE
+    
+*
+    margin: 0
+    padding: 0
+    box-sizing: border-box
+
+html, body
+    height: 100%
+
+html
+    font-family: 'Roboto', sans-serif
+    font-size: 10px
+    // background: #424242
+    background: linear-gradient(to right, #57c1eb 0%, #246fa8 100%)
+
+body
+    display: grid
+    place-items: center
+
+.chat-container
+    display: grid
+    grid-template-columns: 300px 1fr
+    grid-template-rows: 71px 1fr 78px
+    // grid-template-areas: 'bot-name chat-title' 
+    //                      'bot-info chat-message-list' 
+    //                      'bot-info chat-form'
+    grid-template-areas: 'bot-name chat-title' 'bot-info chat-message-list' 'bot-info chat-form'
+    min-width: 800px
+    max-width: 1000px
+    max-height: 800px
+    height: 95vh
+    background: #fff
+    border-radius: 10px
+
+.bot-name, .bot-info
+    background: $primary
+
+.bot-name
+    justify-items: center
+    h4
+        color: #EEE
+        font-size: 24px
+        font-weight: 300
+    display: grid
+    align-items: center
+    padding: 0 20px
+    grid-area: bot-name
+    border-radius: 10px 0 0
+    box-shadow: 0 1px 3px -1px rgba(0,0,0,.75)
+    z-index: 1
+    input
+        color: #EEE
+        outline: none
+        font-weight: bold
+        border-radius: 2px
+        height: 30px
+        border: 0
+        padding-left: 48px
+        padding-right: 20px
+        font-size: 1.4rem
+        background: url('../img/icons/search.svg') no-repeat rgba(255, 255, 255, .3)
+        background-position: 15px center
+        background-size: 20px 20px
+        &::placeholder
+            color: #ddd
+            font-weight: bold
+
+.bot-info
+    .picture
+        width: 190px
+        height: 190px
+        margin: 15px auto
+        border: solid 3px #EEE
+        box-shadow: 0 1px 3px -1px rgba(0,0,0,.75)
+        border-radius: 50%
+    grid-area: bot-info
+    // overflow-y: scroll
+    border-radius: 0px 0px 0px 10px
+    .active
+        background: #002C88
+
+.conversation
+    display: grid
+    grid-template-columns: 40px 1fr max-content
+    grid-gap: 10px
+    color: #ddd
+    font-size: 1.3rem
+    border-bottom: 1px solid #002c88
+    padding: 20px 20px 20px 15px
+    &:hover
+        background: #002C88
+        cursor: pointer
+    img
+        grid-row: span 2
+        height: 40px
+        width: 40px
+        border-radius: 100%
+    .title-text
+        font-weight: bold
+        color: $text
+        padding-left: 5px
+        white-space: nowrap
+        overflow-x: hidden
+        text-overflow: ellipsis
+    .created-date
+        color: #ddd
+        font-size: 1rem
+    .conversation-message
+        grid-column: span 2
+        padding-left: 5px
+        white-space: nowrap
+        overflow-x: hidden
+        text-overflow: ellipsis
+
+
+.new-message-container
+    display: grid
+    grid: 40px / 40px
+    align-content: center
+    grid-area: new-message-container
+    border-top: 1px solid rgba(0,0,0,.25)
+    border-radius: 0 0 0 10px
+    padding: 0 15px
+    a
+        display: grid
+        place-content: center
+        background: $text
+        border-radius: 100%
+        color: #002c88
+        text-decoration: none
+        font-size: 3.6rem
+
+.chat-title, .chat-form
+    background: #EEE
+
+.chat-title
+    display: grid
+    grid: 36px / 1fr 36px 
+    align-content: center
+    align-items: center
+    grid-area: chat-title
+    color: #0048aa
+    font-weight: bold
+    font-size: 2.0rem
+    border-radius: 0 10px 0 0
+    box-shadow: 0 1px 3px -1px rgba(0,0,0,.75)
+    padding: 0 20px
+
+.chat-title > i
+    cursor: pointer
+
+.chat-message-list
+    grid-area: chat-message-list
+    // background-image: url('/img/wallpaper.png')
+    background-size: cover
+    // display: flex
+    // flex-direction: column-reverse
+    padding: 10px 20px
+    overflow-y: scroll
+
+.message-row
+    display: grid
+    grid-template-columns: 70%
+    margin-bottom: 20px
+
+.message-content
+    display: grid
+
+.you-message
+    justify-content: end
+    .message-content
+        justify-items: end
+
+.other-message
+    justify-items: start
+    .message-content
+        grid-template-columns: 48px 1fr
+        grid-gap: 15px
+
+.message-row
+    img
+        border-radius: 100%
+        grid-row: span 2
+        width: 40px
+        height: 40px
+
+
+.message-text
+    padding: 9px 14px
+    font-size: 1.6rem
+    margin-bottom: 5px
+
+.message-time
+    font-size: 1.3rem
+    color: #777
+
+.you-message
+    .message-text
+        background: $primary
+        color: $text
+        border: 1px solid $primary
+        border-radius: 14px 14px 0 14px
+
+.other-message
+    .message-text
+        background: $text
+        color: #111
+        border: 1px solid #ddd
+        border-radius: 14px 14px 14px 0
+        
+
+.chat-form
+    display: grid
+    grid: 51px / 1fr 32px
+    align-content: center
+    align-items: center
+    grid-gap: 15px
+    grid-area: chat-form
+    border-radius: 0 0 10px 0
+    border-top: 1px solid rgba(0,0,0,.25)
+    padding-left: 42px
+    padding-right: 22px
+    i
+        font-size: 2.5rem
+        color: $primary
+        cursor: pointer
+    input
+        outline: none
+        padding: 15px
+        border: 2px solid #ddd
+        color: #330
+        border-radius: 6px
+        font-size: 1.4rem
+
+::-webkit-scrollbar
+    display: none
+
+// Media query
+@media screen and (max-width: 768px)
+    .chat-container
+        grid-template-columns: 1fr
+        grid-template-areas: 'chat-title' 'chat-message-list' 'chat-form'
+        width: 100%
+        min-width: 100%
+        max-width: 100%
+
+    .chat-title
+        grid-area: chat-title
+        border-radius: 0px
+        background: $primary
+        color: $text
+        
+    
+    .chat-message-list
+        grid-area: chat-message-list
+
+    .chat-form
+        grid-area: chat-form
+        grid: 51px / 1fr 32px
+        border-radius: 0px
+        background: $primary
+        color: $text
+        i
+            color: $text
+
+    .bot-name
+        display: none
+    
+    .bot-info
+        display: none

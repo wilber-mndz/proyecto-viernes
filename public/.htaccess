@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+#Desactivamos las multivistas
+Options -Multiviews
+# Habilitamos la reescritura
+RewriteEngine On
+# Indicamos nuestra ruta base
+RewriteBase /proyecto-viernes/public
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+# Si el archivo al que se quiere acceder no existe
+# se redirecciona al index.php
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+</IfModule>
