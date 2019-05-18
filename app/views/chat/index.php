@@ -20,7 +20,7 @@
         <div class="bot-info">
             <!-- Diseño de bot   -->
             <div class="picture">
-                hola
+            
             </div>
         </div>
         <div class="chat-title">
@@ -28,45 +28,7 @@
             <i class="fas fa-bars"></i>
         </div>
         <div class="chat-message-list" id="chat-message-list">
-            <div class="message-row other-message">
-                <div class="message-content">
-                    <img src="img/01.jpg" alt="Juan Pérez">
-                    <div class="message-text">Hola, ¿Como estás?</div>
-                    <div class="message-time">Abr 15</div>
-                </div>
-            </div>
-            <div class="message-row you-message">
-                <div class="message-content">
-                    <div class="message-text">Muy bien, ¿y tu?</div>
-                    <div class="message-time">Abr 15</div>
-                </div>
-            </div>
-            <div class="message-row other-message">
-                <div class="message-content">
-                    <img src="img/01.jpg" alt="Juan Pérez">
-                    <div class="message-text">Trabajando en el proyecto de bases de datos </div>
-                    <div class="message-time">Abr 15</div>
-                </div>
-            </div>
-            <div class="message-row you-message">
-                <div class="message-content">
-                    <div class="message-text">y como vas?</div>
-                    <div class="message-time">Abr 15</div>
-                </div>
-            </div>
-            <div class="message-row other-message">
-                <div class="message-content">
-                    <img src="img/01.jpg" alt="Juan Pérez">
-                    <div class="message-text">Pues muy mal</div>
-                    <div class="message-time">Abr 15</div>
-                </div>
-            </div>
-            <div class="message-row you-message">
-                <div class="message-content">
-                    <div class="message-text">que triste</div>
-                    <div class="message-time">Abr 15</div>
-                </div>
-            </div>
+            
         </div>
         <div class="chat-form">
             <input type="text" onkeypress="send_keyboard(event)" id="message-form" placeholder="Escribe un mensaje">
@@ -76,6 +38,7 @@
 
     <!-- Archivos JS -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/utf8.js"></script>
     <script src="js/main.js"></script>
 </body>
 

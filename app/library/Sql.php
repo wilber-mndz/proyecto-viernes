@@ -1,10 +1,10 @@
 <?php
     // Clase para conectarse a la base de datos y ejecutar consultas PDO
     class Sql{
-        private $host = DB_HOST;
-        private $db = DB_NAME;
-        private $user = DB_USER;
-        private $pass = DB_PASS;
+        private $host = 'SOUL:5000';
+        private $db = 'prueba';
+        private $user = 'sa';
+        private $pass = '123456';
 
         private $dbh;
         private $stmt;
@@ -12,11 +12,20 @@
 
         public function __construct(){
             // Ajustes de la conexion
-            $dsn = "mysql:host=" . $this->host. ";dbname=" . $this->db; 
+           
+            $dsn = "dblib:host=" . $this->host. ";dbname=" . $this->db; 
+
+            // Ajustes para conexion persistente
             $option = array(
-                PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                PDO::ATTR_PERSISTENT => true
             );
+
+            // Ajustes para conexion persistente con errores
+            // Habilitar en desarrollo
+            // $option = array(
+            //     PDO::ATTR_PERSISTENT => true,
+            //     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            // );
 
             // Creamos nuestra conexión PDO
             try{
@@ -82,4 +91,5 @@
             return $this->stmt->rowCount();
         }
     }
+
 ?>
