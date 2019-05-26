@@ -1,10 +1,10 @@
 <?php
     // Clase para conectarse a la base de datos y ejecutar consultas PDO
     class Sql{
-        private $host = 'SOUL:5000';
-        private $db = 'prueba';
-        private $user = 'sa';
-        private $pass = '123456';
+        private $host = DB_HOST;
+        private $user = DB_USER;
+        private $db = DB_NAME;
+        private $pass = DB_PASS;
 
         private $dbh;
         private $stmt;

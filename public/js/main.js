@@ -74,7 +74,7 @@
         // Realizamos nuestra pericion AJAX
         var petition = new XMLHttpRequest();
 
-        petition.open('POST', 'http://192.168.0.109/proyecto-viernes/Conversation');
+        petition.open('POST', 'http://localhost/proyecto-viernes/Conversation');
         // Establecemos el header de como queremos envier nuestra peticion
         petition.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 

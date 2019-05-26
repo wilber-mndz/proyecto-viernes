@@ -27,22 +27,24 @@ class Conversation extends MainController
             $keywords = explode(' ', $menssage);
 
             // Creamos nuestra consulta
-            $query = "SELECT TOP 1 r.texto, p.idrespuesta, (COUNT(p.idrespuesta)) AS N 
-            FROM prueba.dbo.palabras AS p
-            INNER JOIN prueba.dbo.respuestas AS r
-            ON p.idrespuesta = r.idrespuesta
+            $query = "SELECT TOP 1 a.answer, k.id_answer, (COUNT(k.id_answer)) AS N 
+            FROM dbfriday.dbo.tbl_keywords AS k
+            INNER JOIN dbfriday.dbo.tbl_answers AS a
+            ON k.id_answer = a.id_answer
             WHERE";
 
             foreach ($keywords as $key => $word) {
-                $query .= " palabra LIKE '$word' OR";
+                $query .= " keyword LIKE '$word' OR";
             }
 
             // Eliminamos el ultimo " OR" que nos agrega el foreach
             $query = substr($query, 0, -3);
             
             $query .= "
-            GROUP BY r.idrespuesta
+            GROUP BY a.id_answer
             ORDER BY N DESC";
+
+            // echo $query;
 
             $db = new Sql;
 
@@ -52,7 +54,7 @@ class Conversation extends MainController
             if ($answer) {
                 # code...
                 // Retornamos la respuesta codificada en utf8
-                echo utf8_encode($answer->texto);
+                echo utf8_encode($answer->answer);
             } else {
                 echo utf8_encode('Aun no tengo respuesta para eso');
             }
