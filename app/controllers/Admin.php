@@ -2,7 +2,7 @@
 class Admin extends MainController
 {
     public function __construct(){
-
+        sessionUser();
     }
 
     public function index(){

@@ -60,6 +60,8 @@ class Conversation extends MainController
             }
 
 
+        }else{
+            redirect('/');
         }
     }
     

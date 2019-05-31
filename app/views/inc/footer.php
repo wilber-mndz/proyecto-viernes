@@ -45,6 +45,8 @@
   <script src="<?php echo ROUTE_URL?>/assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="<?php echo ROUTE_URL?>/assets/demo/demo.js"></script>
+  <!-- Sweet alert -->
+  <script src="<?php echo ROUTE_URL?>/js/sweetalert.js"></script>
   <script>
     $(document).ready(function() {
       $().ready(function() {

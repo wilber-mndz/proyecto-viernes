@@ -12,4 +12,6 @@
 
     define('SITE_NAME', '_NOMBRE_SITIO');
 
+    define('SALT', '%]7"oR9S+N');
+
 ?>

@@ -18,6 +18,9 @@
     <link href="<?php echo ROUTE_URL?>/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="<?php echo ROUTE_URL?>/assets/demo/demo.css" rel="stylesheet" />
+    <!-- Mis estilos css -->
+    <link href="<?php echo ROUTE_URL?>/css/d_styles.css" rel="stylesheet" />
+
 </head>
 
 <body class="white-content">
@@ -37,7 +40,7 @@
                 </div>
                 <ul class="nav">
                     <li class="active ">
-                        <a href="#">
+                        <a href="<?php echo ROUTE_URL?>/admin">
                             <i class="fas fa-home"></i>
                             <p>Inicio</p>
                         </a>
@@ -55,7 +58,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="<?php echo ROUTE_URL?>/users">
                             <i class="fas fa-users"></i>
                             <p>Usuarios</p>
                         </a>
@@ -93,21 +96,15 @@
                         <ul class="navbar-nav ml-auto">
                             <li class="dropdown nav-item">
                                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                                    <div class="photo">
-                                        <img src="../assets/img/anime3.png" alt="Profile Photo">
-                                    </div>
-                                    <b class="caret d-none d-lg-block d-xl-block"></b>
-                                    <p class="d-lg-none">
-                                        Log out
-                                    </p>
+                                <i class="fas fa-user"></i> <b> <?php echo $_SESSION['user']->name?> </b>
                                 </a>
                                 <ul class="dropdown-menu dropdown-navbar">
                                     <li class="nav-link">
-                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Perfil</a>
+                                        <a href="javascript:void(0)" class="nav-item dropdown-item"><i class="fas fa-user-edit"></i> Perfil</a>
                                     </li>
                                     <li class="dropdown-divider"></li>
                                     <li class="nav-link">
-                                        <a href="javascript:void(0)" class="nav-item dropdown-item">Cerrar sesión</a>
+                                        <a href="<?php echo ROUTE_URL?>/login/logout" class="nav-item dropdown-item"> <i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
                                     </li>
                                 </ul>
                             </li>

@@ -16,16 +16,16 @@
             $dsn = "dblib:host=" . $this->host. ";dbname=" . $this->db; 
 
             // Ajustes para conexion persistente
-            $option = array(
-                PDO::ATTR_PERSISTENT => true
-            );
+            // $option = array(
+            //     PDO::ATTR_PERSISTENT => true
+            // );
 
             // Ajustes para conexion persistente con errores
             // Habilitar en desarrollo
-            // $option = array(
-            //     PDO::ATTR_PERSISTENT => true,
-            //     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-            // );
+            $option = array(
+                PDO::ATTR_PERSISTENT => true,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            );
 
             // Creamos nuestra conexión PDO
             try{
