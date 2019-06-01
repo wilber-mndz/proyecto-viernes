@@ -12,8 +12,8 @@
 
         public function __construct(){
             // Ajustes de la conexion
-           
-            $dsn = "dblib:host=" . $this->host. ";dbname=" . $this->db; 
+
+            $dsn = "dblib:host=" . $this->host. ";dbname=" . $this->db;
 
             // Ajustes para conexion persistente
             // $option = array(
