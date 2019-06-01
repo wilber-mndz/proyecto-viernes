@@ -95,11 +95,8 @@ class ModelUsers
     public function update_user($id, $user){
       $this->db->query(
            "update_user @name = :name, @last_name = :last_name, @birthdate = :birthdate,
-           @gender = :gender, @email = :email, @password = :password, @id = :id"
+           @gender = :gender, @email = :email, @user_type = :user_type, @id = :id"
        );
-      // $this->db->query("UPDATE tbl_users
-      //                   SET name = :name, last_name = :last_name, gender = CONVERT(int, :gender), email = :email, user_type = CONVERT(int, :user_type)
-      //                   WHERE id_user = CONVERT(int, :id)");
 
                         // Vinculamos los datos a nuestra consulta preparada
           $this->db->bind(':name', $user['name']);
