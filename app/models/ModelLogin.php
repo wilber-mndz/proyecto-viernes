@@ -26,7 +26,7 @@ class ModelLogin{
         // Preparamos nuestra consulta
         $this->db->query(
             "SELECT id_user, (name +' '+ last_name) AS name, birthdate, gender, email, user_type
-            FROM dbfriday.dbo.tbl_users WHERE email = :email AND password = :password"
+            FROM dbfriday.dbo.tbl_users WHERE email = :email AND password = :password AND status = 1"
         );
 
         // Vinculamos los datos

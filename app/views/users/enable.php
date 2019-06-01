@@ -5,11 +5,11 @@
         <a class="text-info" href="<?php echo ROUTE_URL?>/users"><i class="fas fa-step-backward"></i> Regresar</a>
     </div>
     <div class="card-body">
-        <div class="alert alert-warning">
+        <div class="alert alert-primary">
             <div class="alert_disable_user">
-                <i class="fas fa-exclamation-triangle"></i>
-                ¿Esta seguro que decea desactivar este usuario?
-                <i class="fas fa-exclamation-triangle"></i>
+                <i class="fas fa-info-circle"></i>
+                ¿Esta seguro que decea activar este usuario?
+                <i class="fas fa-info-circle"></i>
             </div>
         </div>
 
@@ -71,14 +71,13 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="alert alert-info">
-                    Si desactivas un usuario ya no podrá iniciar sesión en el sistema pero su información se conservara
-                    y podrá ser activado nuevamente
+                    Si activa este usuario podrá volver a iniciar sesión en el sistema y recuperara todos sus privilegios
                 </div>
             </div>
         </div>
-        <form action="<?php echo ROUTE_URL?>/users/disable/<?php echo $parameters['user']->id_user?>" method="post">
+        <form action="<?php echo ROUTE_URL?>/users/enable/<?php echo $parameters['user']->id_user?>" method="post">
             <input style="display:none" type="text" name="id" value="<?php echo $parameters['user']->id_user?>">
-            <button class="btn btn-danger" type="submit">Desactivar</button>
+            <button class="btn btn-primary" type="submit">Activar</button>
             <a href="<?php echo ROUTE_URL?>/users" class="btn btn-default">Cancelar</a>
         </form>
     </div>

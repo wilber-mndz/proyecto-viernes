@@ -61,11 +61,11 @@
                             </div>
                         </div>
 
-                        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $parameters['errores'] != ''):?>
+                        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $parameters['errors'] != ''):?>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="alert alert-danger">
-                                    <?php echo $parameters['errores']?>
+                                    <?php echo $parameters['errors']?>
                                 </div>
                             </div>
                         </div>
