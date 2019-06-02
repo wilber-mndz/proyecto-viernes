@@ -85,7 +85,7 @@
                 </button>
             </div>
             <!-- Formulario nuevo usuario -->
-            <form action="<?php echo ROUTE_URL?>/users/" method="post" id="form-usuario">
+            <form action="<?php echo ROUTE_URL?>/users/" method="post" id="form-usuario" id="form-usuario">
                 <div class="modal-body">
 
                     <div class="row">
@@ -163,6 +163,12 @@
                                 <input type="password" class="form-control" name="password2" id="password2"
                                     placeholder="Repetir contraseña">
                             </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger errors" style="display:none" id="errores"></div>
                         </div>
                     </div>
 
