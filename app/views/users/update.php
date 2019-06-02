@@ -88,14 +88,14 @@
 <?php require_once('../app/views/inc/footer.php');
 // Alertas
 if ($parameters['alert'] == 'saved') {
-    echo 
+    echo
     "<script>
         Swal.fire({
         title: 'Datos guardados',
         text: 'Usuario modificado con exito',
         type: 'success',
         confirmButtonText: 'Aceptar'
-      }) 
+      })
     </script>";
 }
 ?>

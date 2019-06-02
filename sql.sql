@@ -76,7 +76,7 @@ INSERT INTO dbfriday.dbo.tbl_users (id_user, name, last_name, birthdate, gender,
 -- -------------------------------------------------------------
 
 -- Procedimiento para guardar un nuevo usuario
-CREATE proc add_user
+CREATE OR REPLACE proc add_user
 	@name VARCHAR(45),
 	@last_name VARCHAR(45),
 	@birthdate DATE,
@@ -88,11 +88,11 @@ AS
 BEGIN
 --	Declaramos variable para obtener el id anterior
 	DECLARE @id int
-	
+
 --	Obtenemos el id anterior
 	SELECT @id = MAX(id_user)
 	FROM dbfriday.dbo.tbl_users
-	
+
 -- guardamos los datos del usuario
 	INSERT INTO dbfriday.dbo.tbl_users
 	(id_user, name, last_name, birthdate, gender, email, password, user_type, status)
@@ -138,5 +138,17 @@ BEGIN
 -- cambiamos el estado del usuario
 	UPDATE dbfriday.dbo.tbl_users
 	SET status = 1
+	WHERE id_user=CONVERT(int, @id)
+END
+
+-- Procedimiento para Actualizar contraseña
+CREATE OR REPLACE proc update_password
+	@password VARCHAR(400),
+	@id VARCHAR(10)
+AS
+BEGIN
+-- guardamos la contraseña del usuario
+	UPDATE dbfriday.dbo.tbl_users
+	SET password=@password
 	WHERE id_user=CONVERT(int, @id)
 END
