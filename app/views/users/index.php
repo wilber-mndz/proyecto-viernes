@@ -230,34 +230,34 @@
 
 // Alertas
 if ($parameters['alert'] == 'saved') {
-    echo 
+    echo
     "<script>
         Swal.fire({
         title: 'Datos guardados',
         text: 'Nuevo usuario registrado exitosamente',
         type: 'success',
         confirmButtonText: 'Aceptar'
-      }) 
+      })
     </script>";
 } else if($parameters['alert'] == 'disabled'){
-    echo 
+    echo
     "<script>
         Swal.fire({
         title: 'Usuario desactivado',
         text: 'Los cambios se efectuaran en el siguiente inicio de sesión',
         type: 'success',
         confirmButtonText: 'Aceptar'
-      }) 
+      })
     </script>";
 } else if($parameters['alert'] == 'enabled'){
-    echo 
+    echo
     "<script>
         Swal.fire({
         title: 'Usuario activado',
         text: 'Ahora el usuario puede acceder al sistema nuevamente',
         type: 'success',
         confirmButtonText: 'Aceptar'
-      }) 
+      })
     </script>";
 }
 ?>

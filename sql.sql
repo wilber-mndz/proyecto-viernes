@@ -63,16 +63,6 @@ CREATE TABLE dbfriday.dbo.tbl_users (
 -- 	CONSTRAINT tbl_chat_history_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
 -- ) GO
 
--- Tabla bitacora
-CREATE TABLE dbfriday.dbo.tbl_binnacle (
-	id_binnacle int NOT NULL,
-	operation varchar(100) NOT NULL,
-	table_name varchar(100) NOT NULL,
-	new_data varchar(400) NOT NULL,
-	old_data varchar(400) NOT NULL,
-	dt datetime NOT NULL
-)
-
 -- Insersion de datos
 -- ------------------------------------------------------------
 
@@ -98,15 +88,15 @@ AS
 BEGIN
 --	Declaramos variable para obtener el id anterior
 	DECLARE @id int
-	
+
 --	Obtenemos el id anterior
-	SELECT @id = isNull(MAX(id_user), 0) + 1
+	SELECT @id = MAX(id_user)
 	FROM dbfriday.dbo.tbl_users
-	
+
 -- guardamos los datos del usuario
 	INSERT INTO dbfriday.dbo.tbl_users
 	(id_user, name, last_name, birthdate, gender, email, password, user_type, status)
-	VALUES(@id, @name, @last_name, @birthdate, CONVERT(int, @gender), @email, @password, CONVERT(int, @user_type), 1)
+	VALUES(@id + 1, @name, @last_name, @birthdate, CONVERT(int, @gender), @email, @password, CONVERT(int, @user_type), 1)
 END
 
 
@@ -151,74 +141,15 @@ BEGIN
 	WHERE id_user=CONVERT(int, @id)
 END
 
--- TRIGGERS
--- -----------------------------------------------------------
-
--- Triger para la tabla tbl_users INSERT
-CREATE OR REPLACE TRIGGER dbo.tg_insert_users
-ON dbo.tbl_users
-FOR INSERT
+-- Procedimiento para Actualizar contraseña
+CREATE OR REPLACE proc update_password
+	@password VARCHAR(400),
+	@id VARCHAR(10)
 AS
--- Declaramos variables 
-	DECLARE @new_id INT, @new_name VARCHAR(45), @new_last_name VARCHAR(45), @new_birthdate DATE,
-	@new_gender INT, @new_email VARCHAR(50), @new_user_type INT, @new_status INT, @id INT,
-	@new_data VARCHAR(300)
-	
---	Obtenemos los datos nuevos
-	SELECT @new_id = id_user, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate, 
-	@new_gender = gender, @new_email = email, @new_user_type = user_type, @new_status = status
-	FROM inserted
-	
--- creamos la cadena de los datos nuevos
-	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + ', name = ' + @new_name +
-	', last_name = ' + @new_last_name + ', birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
-	', gender = ' +	CONVERT(VARCHAR, @new_gender) + ', email = ' + @new_email + ', user_type = ' + 
-	CONVERT(VARCHAR, @new_user_type) + ', status = ' + CONVERT(VARCHAR, @new_status)
-	
--- Obtenemos el id de la bitacora
-	SELECT @id = isNull(MAX(id_binnacle), 0)
-	FROM dbfriday.dbo.tbl_binnacle
-	
-	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
-	VALUES(@id + 1, 'INSERT', 'TBL_USERS', @new_data , '', getdate())
+BEGIN
+-- guardamos la contraseña del usuario
+	UPDATE dbfriday.dbo.tbl_users
+	SET password=@password
+	WHERE id_user=CONVERT(int, @id)
+END
 
--- Triger para la tabla tbl_users UPDATE
-CREATE OR REPLACE TRIGGER dbo.tg_update_users
-ON dbo.tbl_users
-FOR UPDATE
-AS
--- Declaramos variables 
-	DECLARE @old_id INT, @old_name VARCHAR(45), @old_last_name VARCHAR(45), @old_birthdate DATE,
-	@old_gender INT, @old_email VARCHAR(50), @old_user_type INT, @old_status INT,
-	@new_id INT, @new_name VARCHAR(45), @new_last_name VARCHAR(45), @new_birthdate DATE,
-	@new_gender INT, @new_email VARCHAR(50), @new_user_type INT, @new_status INT, @id INT,
-	@old_data VARCHAR(300), @new_data VARCHAR(300)
-	
---	Obtenemos los datos viejos
-	SELECT @old_id = id_user, @old_name = name, @old_last_name = last_name, @old_birthdate = birthdate, 
-	@old_gender = gender, @old_email = email, @old_user_type = user_type, @old_status = status
-	FROM deleted
-		
--- creamos la cadena de los datos viejos
-	SET @old_data = 'id_user = ' + convert(varchar, @old_id) + ', name = ' + @old_name +
-	', last_name = ' + @old_last_name + ', birthdate = ' + CONVERT(VARCHAR, @old_birthdate) + 
-	', gender = ' +	CONVERT(VARCHAR, @old_gender) + ', email = ' + @old_email + ', user_type = ' + 
-	CONVERT(VARCHAR, @old_user_type) + ', status = ' + CONVERT(VARCHAR, @old_status)
-	
---	Obtenemos los datos nuevos
-	SELECT @new_id = id_user, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate, 
-	@new_gender = gender, @new_email = email, @new_user_type = user_type, @new_status = status
-	FROM inserted
-	
--- creamos la cadena de los datos nuevos
-	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + ', name = ' + @new_name +
-	', last_name = ' + @new_last_name + ', birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
-	', gender = ' +	CONVERT(VARCHAR, @new_gender) + ', email = ' + @new_email + ', user_type = ' + 
-	CONVERT(VARCHAR, @new_user_type) + ', status = ' + CONVERT(VARCHAR, @new_status)
-	
--- Obtenemos el id de la bitacora
-	SELECT @id = isNull(MAX(id_binnacle), 0)
-	FROM dbfriday.dbo.tbl_binnacle
-	
-	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
-	VALUES(@id + 1, 'UPDATE', 'TBL_USERS', @new_data , @old_data, getdate())
