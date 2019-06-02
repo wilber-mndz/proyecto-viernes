@@ -148,6 +148,36 @@ class Users extends MainController
         $this->view('users/update', $parameters);
     }
 
+    public function change_password($id = 0, $alert = '')
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Limpiamos los datos para prevenir inyección de código
+            $user['password'] = hash('sha512', SALT . sanitize($_POST['password']));
+
+
+            if ($this->ModelUsers->update_password($id, $user)) {
+            header("location:".ROUTE_URL."/users/change_password/".$id."/saved");
+                //redirect('/users/saved');
+            } else {
+                die('Error al guardar los datos');
+            }
+      }
+
+        $user = $this->ModelUsers->get_user($id);
+        if (!$user) {
+            header('location:'.ROUTE_URL.'/change_password');
+        }
+
+        $parameters = [
+            'menu' => 'users',
+            'user' => $user,
+            'alert' => $alert
+        ];
+
+        $this->view('users/change_password', $parameters);
+    }
+
 }
 
 
