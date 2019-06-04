@@ -64,8 +64,8 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
-                            <i class="fas fa-sliders-h"></i>
+                        <a href="<?php echo ROUTE_URL?>/binnacle">
+                            <i class="fas fa-database"></i>
                             <p>Configuración</p>
                         </a>
                     </li>

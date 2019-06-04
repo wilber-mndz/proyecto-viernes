@@ -30,26 +30,28 @@ CREATE TABLE dbfriday.dbo.tbl_users (
 	user_type int NOT NULL,
 	status int NOT NULL,
 	CONSTRAINT tbl_users_PK PRIMARY KEY (id_user)
-) GO
+)
 
 -- Tabla respuestas
--- CREATE TABLE dbfriday.dbo.tbl_answers (
--- 	id_answer int,
--- 	id_user int,
--- 	answer varchar(500) NOT NULL,
--- 	update_date datetime NOT NULL,
--- 	CONSTRAINT tbl_answers_PK PRIMARY KEY (id_answer),
--- 	CONSTRAINT tbl_answers_tbl_users_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user)
--- ) GO
+CREATE TABLE dbfriday.dbo.tbl_answers (
+	id_answer int NOT NULL,
+	id_user int NOT NULL,
+	answer varchar(500) NOT NULL,
+	insert_date datetime NOT NULL,
+	id_user_update int,
+	update_date datetime,
+	CONSTRAINT tbl_answers_PK PRIMARY KEY (id_answer),
+	CONSTRAINT tbl_answers_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user)
+)
 
 -- Tabla palabras claves
--- CREATE TABLE dbfriday.dbo.tbl_keywords (
--- 	id_keyword int,
--- 	id_answer int NOT NULL,
--- 	keyword varchar(20) NOT NULL,
--- 	CONSTRAINT tbl_keywords_PK PRIMARY KEY (id_keyword),
--- 	CONSTRAINT tbl_keywords_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
--- ) GO
+CREATE TABLE dbfriday.dbo.tbl_keywords (
+	id_keyword int,
+	id_answer int NOT NULL,
+	keyword varchar(20) NOT NULL,
+	CONSTRAINT tbl_keywords_PK PRIMARY KEY (id_keyword),
+	CONSTRAINT tbl_keywords_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
+)
 
 -- Tabla historial de chat
 -- CREATE TABLE dbfriday.dbo.tbl_chat_history (
@@ -162,6 +164,28 @@ BEGIN
 	WHERE id_user=CONVERT(int, @id)
 END
 
+
+-- Procedimiento para guardar una nueva respuesta
+CREATE OR REPLACE proc add_answer
+	@id_user VARCHAR(11),
+	@answer VARCHAR(500),
+	@id_user_update VARCHAR(11)
+	
+AS
+BEGIN
+--	Declaramos variable para obtener el id anterior
+	DECLARE @id int
+	
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_user), 0) + 1
+	FROM dbfriday.dbo.tbl_answers
+	
+-- guardamos los datos del usuario
+	INSERT INTO dbfriday.dbo.tbl_answers
+	(id_answer, id_user, answer, insert_date, id_user_update, update_date)
+	VALUES(@id, CONVERT(INT, @id_user), @answer, getdate(), CONVERT(INT, @id_user), getdate())
+END
+
 -- TRIGGERS
 -- -----------------------------------------------------------
 
@@ -181,10 +205,10 @@ AS
 	FROM inserted
 	
 -- creamos la cadena de los datos nuevos
-	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + ', name = ' + @new_name +
-	', last_name = ' + @new_last_name + ', birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
-	', gender = ' +	CONVERT(VARCHAR, @new_gender) + ', email = ' + @new_email + ', user_type = ' + 
-	CONVERT(VARCHAR, @new_user_type) + ', status = ' + CONVERT(VARCHAR, @new_status)
+	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + '| name = ' + @new_name +
+	'| last_name = ' + @new_last_name + '| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
+	'| gender = ' +	CONVERT(VARCHAR, @new_gender) + '| email = ' + @new_email + '| user_type = ' + 
+	CONVERT(VARCHAR, @new_user_type) + '| status = ' + CONVERT(VARCHAR, @new_status)
 	
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
@@ -192,6 +216,7 @@ AS
 	
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'INSERT', 'TBL_USERS', @new_data , '', getdate())
+
 
 -- Triger para la tabla tbl_users UPDATE
 CREATE OR REPLACE TRIGGER dbo.tg_update_users
@@ -211,10 +236,10 @@ AS
 	FROM deleted
 		
 -- creamos la cadena de los datos viejos
-	SET @old_data = 'id_user = ' + convert(varchar, @old_id) + ', name = ' + @old_name +
-	', last_name = ' + @old_last_name + ', birthdate = ' + CONVERT(VARCHAR, @old_birthdate) + 
-	', gender = ' +	CONVERT(VARCHAR, @old_gender) + ', email = ' + @old_email + ', user_type = ' + 
-	CONVERT(VARCHAR, @old_user_type) + ', status = ' + CONVERT(VARCHAR, @old_status)
+	SET @old_data = 'id_user = ' + convert(varchar, @old_id) + '| name = ' + @old_name +
+	'| last_name = ' + @old_last_name + '| birthdate = ' + CONVERT(VARCHAR, @old_birthdate) + 
+	'| gender = ' +	CONVERT(VARCHAR, @old_gender) + '| email = ' + @old_email + '| user_type = ' + 
+	CONVERT(VARCHAR, @old_user_type) + '| status = ' + CONVERT(VARCHAR, @old_status)
 	
 --	Obtenemos los datos nuevos
 	SELECT @new_id = id_user, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate, 
@@ -222,10 +247,10 @@ AS
 	FROM inserted
 	
 -- creamos la cadena de los datos nuevos
-	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + ', name = ' + @new_name +
-	', last_name = ' + @new_last_name + ', birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
-	', gender = ' +	CONVERT(VARCHAR, @new_gender) + ', email = ' + @new_email + ', user_type = ' + 
-	CONVERT(VARCHAR, @new_user_type) + ', status = ' + CONVERT(VARCHAR, @new_status)
+	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + '| name = ' + @new_name +
+	'| last_name = ' + @new_last_name + '| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
+	'| gender = ' +	CONVERT(VARCHAR, @new_gender) + '| email = ' + @new_email + '| user_type = ' + 
+	CONVERT(VARCHAR, @new_user_type) + '| status = ' + CONVERT(VARCHAR, @new_status)
 	
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
@@ -233,4 +258,72 @@ AS
 	
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'UPDATE', 'TBL_USERS', @new_data , @old_data, getdate())
+
+-- Triger para la tabla TBL_ANSWER INSERT
+CREATE OR REPLACE TRIGGER dbo.tg_insert_answer
+ON dbo.tbl_answers
+FOR INSERT
+AS
+-- Declaramos variables 
+	DECLARE @new_id INT, @new_id_user INT, @new_answer VARCHAR(500), @new_insert_date DATETIME,
+	@new_id_user_update INT, @new_update_date DATETIME, @new_data VARCHAR(400), @id INT
+	
+--	Obtenemos los datos nuevos
+	SELECT @new_id = id_answer, @new_id_user = id_user, @new_answer = answer, @new_insert_date = insert_date,
+	@new_id_user_update = id_user_update, @new_update_date = update_date
+	FROM inserted
+
+-- creamos la cadena de los datos nuevos
+	SET @new_data = 'id_answer = ' + convert(varchar, @new_id) + '| id_user = ' + 
+	CONVERT(varchar, @new_id_user) + '| answer = ' + @new_answer + '| insert_date = ' 
+	+ CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' +	CONVERT(VARCHAR, @new_id_user_update) +
+	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
+	
+-- Obtenemos el id de la bitacora
+	SELECT @id = isNull(MAX(id_binnacle), 0)
+	FROM dbfriday.dbo.tbl_binnacle
+	
+	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
+	VALUES(@id + 1, 'INSERT', 'TBL_ANSWERS', @new_data , '', getdate())
+
+-- Trigger para la tabla TBL_ANSWER UPDATE
+CREATE OR REPLACE TRIGGER dbo.tg_update_answer
+ON dbo.tbl_answers
+FOR UPDATE
+AS
+-- Declaramos variables 
+	DECLARE @new_id INT, @new_id_user INT, @new_answer VARCHAR(500), @new_insert_date DATETIME,
+	@new_id_user_update INT, @new_update_date DATETIME, @new_data VARCHAR(400),
+    @old_id INT, @old_id_user INT, @old_answer VARCHAR(500), @old_insert_date DATETIME,
+	@old_id_user_update INT, @old_update_date DATETIME, @old_data VARCHAR(400),
+    @id INT
+	
+--	Obtenemos los datos nuevos
+	SELECT @new_id = id_answer, @new_id_user = id_user, @new_answer = answer, @new_insert_date = insert_date,
+	@new_id_user_update = id_user_update, @new_update_date = update_date
+	FROM inserted
+
+-- creamos la cadena de los datos nuevos
+	SET @new_data = 'id_answer = ' + convert(varchar, @new_id) + '| id_user = ' + 
+	CONVERT(varchar, @new_id_user) + '| answer = ' + @new_answer + '| insert_date = ' 
+	+ CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' +	CONVERT(VARCHAR, @new_id_user_update) +
+	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
+
+--	Obtenemos los datos viejos
+	SELECT @old_id = id_answer, @old_id_user = id_user, @old_answer = answer, @old_insert_date = insert_date,
+	@old_id_user_update = id_user_update, @old_update_date = update_date
+	FROM deleted
+
+-- creamos la cadena de los datos viejos
+	SET @old_data = 'id_answer = ' + convert(varchar, @old_id) + '| id_user = ' + 
+	CONVERT(varchar, @old_id_user) + '| answer = ' + @old_answer + '| insert_date = ' 
+	+ CONVERT(VARCHAR, @old_insert_date) + '| id_user_update = ' +	CONVERT(VARCHAR, @old_id_user_update) +
+	'| update_date = ' + CONVERT(VARCHAR, @old_update_date)
+	
+-- Obtenemos el id de la bitacora
+	SELECT @id = isNull(MAX(id_binnacle), 0)
+	FROM dbfriday.dbo.tbl_binnacle
+	
+	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
+	VALUES(@id + 1, 'UPDATE', 'TBL_ANSWERS', @new_data , @old_data, getdate())
 
