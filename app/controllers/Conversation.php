@@ -18,7 +18,7 @@ class Conversation extends MainController
     public function index(){
         error_reporting(0);
         header('Content-type: application/json; charset=utf-8');
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Limpiamos y pasamos a mayúsculas la cadena enviada por el usuario
             $menssage = strtoupper(filter_var(trim($_POST['message'], 'FILTER_SANITIZE_STRING')));
@@ -60,9 +60,9 @@ class Conversation extends MainController
             }
 
 
-        }else{
-            redirect('/');
-        }
+        // }else{
+        //     redirect('/');
+        // }
     }
     
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8" />
@@ -39,34 +39,34 @@
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="active ">
+                    <li class="<?php echo $var = ($parameters['menu'] == 'Admin')? 'active' : '' ?>">
                         <a href="<?php echo ROUTE_URL?>/admin">
                             <i class="fas fa-home"></i>
                             <p>Inicio</p>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li class="<?php echo $var = ($parameters['menu'] == 'Pacientes')? 'active' : '' ?>">
+                        <a href="<?php echo ROUTE_URL?>/patient">
                             <i class="fas fa-notes-medical"></i>
                             <p>PACIENTES</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="<?php echo $var = ($parameters['menu'] == 'Viernes')? 'active' : '' ?>">
                         <a href="#">
                             <i class="fas fa-atom"></i>
                             <p>Viernes</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="<?php echo $var = ($parameters['menu'] == 'Usuarios')? 'active' : '' ?>">
                         <a href="<?php echo ROUTE_URL?>/users">
                             <i class="fas fa-users"></i>
                             <p>Usuarios</p>
                         </a>
                     </li>
-                    <li>
+                    <li class="<?php echo $var = ($parameters['menu'] == 'Bitacora')? 'active' : '' ?>">
                         <a href="<?php echo ROUTE_URL?>/binnacle">
                             <i class="fas fa-database"></i>
-                            <p>Configuración</p>
+                            <p>Bitácora</p>
                         </a>
                     </li>
                 </ul>

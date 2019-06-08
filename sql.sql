@@ -52,18 +52,52 @@ CREATE TABLE dbfriday.dbo.tbl_keywords (
 	CONSTRAINT tbl_keywords_PK PRIMARY KEY (id_keyword),
 	CONSTRAINT tbl_keywords_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
 )
+-- Tabla pacientes
+CREATE TABLE dbfriday.dbo.tbl_patient (
+	id_patient int NOT NULL,
+	name varchar(45),
+	last_name varchar(45),
+	birthdate date,
+	gender int,
+	personality varchar(45),
+	ci varchar(45),
+	[character] varchar(45),
+	email varchar(50),
+	password varchar(400),
+	id_user int,
+	insert_date datetime,
+	id_user_update int,
+	update_date datetime,
+	CONSTRAINT tbl_patient_PK PRIMARY KEY (id_patient),
+	CONSTRAINT tbl_patient_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user)
+)
 
--- Tabla historial de chat
--- CREATE TABLE dbfriday.dbo.tbl_chat_history (
--- 	id_chat_history int,
--- 	id_user int NOT NULL,
--- 	message varchar(500) NOT NULL,
--- 	id_answer int NOT NULL,
--- 	update_date datetime NOT NULL,
--- 	CONSTRAINT tbl_chat_history_PK PRIMARY KEY (id_chat_history),
--- 	CONSTRAINT tbl_chat_history_tbl_users_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user),
--- 	CONSTRAINT tbl_chat_history_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
--- ) GO
+-- Tabla historial
+CREATE TABLE dbfriday.dbo.tbl_chat_history (
+	id_chat_history int,
+	id_patient int NOT NULL,
+	message varchar(500) NOT NULL,
+	id_answer int NOT NULL,
+	update_date datetime NOT NULL,
+	CONSTRAINT tbl_chat_history_PK PRIMARY KEY (id_chat_history),
+	CONSTRAINT tbl_chat_history_tbl_patient_FK FOREIGN KEY (id_patient) REFERENCES dbfriday.dbo.tbl_patient(id_patient),
+	CONSTRAINT tbl_chat_history_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
+)
+
+-- Tabla para almacenar preguntas para los test
+CREATE TABLE dbfriday.dbo.id_tests_questions (
+	id_questions int NOT NULL,
+	questions varchar(100) NOT NULL,
+	answer varchar(100) NOT NULL,
+	tests_type int NOT NULL,
+	id_user int NOT NULL,
+	insert_date datetime NOT NULL,
+	id_user_update int,
+	update_date datetime,
+	CONSTRAINT id_tests_questions_PK PRIMARY KEY (id_questions),
+	CONSTRAINT id_tests_questions_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user)
+)
+
 
 -- Tabla bitacora
 CREATE TABLE dbfriday.dbo.tbl_binnacle (
@@ -327,3 +361,124 @@ AS
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'UPDATE', 'TBL_ANSWERS', @new_data , @old_data, getdate())
 
+-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+-- poner aqui triggers para palabras claves
+-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+-- Triger para la tabla tbl_patient INSERT
+CREATE OR REPLACE TRIGGER dbo.tg_insert_patient
+ON dbo.tbl_patient
+FOR INSERT
+AS
+-- Declaramos variables 
+	DECLARE 
+	@new_id INT, 
+	@new_name VARCHAR(45),
+	@new_last_name VARCHAR(45), 
+	@new_birthdate DATE,
+	@new_gender INT, 
+	@new_personality VARCHAR(45),
+	@new_ci VARCHAR(45),
+	@new_character VARCHAR(45),
+	@new_email VARCHAR(50),
+	@new_id_user INT,
+	@new_insert_date DATETIME,
+	@new_id_user_update INT,
+	@new_update_date DATETIME,
+	@id INT,
+	@new_data VARCHAR(400)
+	
+--	Obtenemos los datos nuevos
+	SELECT @new_id = id_patient, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate,
+	@new_gender = gender, @new_personality = personality, @new_ci = ci, @new_character = [character],
+	@new_email = email, @new_id_user =  id_user, @new_insert_date =  insert_date,
+	@new_id_user_update =  id_user_update, @new_update_date  = update_date
+	FROM inserted
+
+	
+-- creamos la cadena de los datos nuevos
+	SET @new_data = 'id_user = ' + CONVERT(VARCHAR, @new_id) + '| name = ' + @new_name + '| last_name = ' + @new_last_name +
+	'| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + '| gender = ' + CONVERT(VARCHAR, @new_gender) + '| personality = ' + @new_personality + 
+	'| ci = ' + @new_ci + '| character = ' + @new_character + '| email = ' + @new_email + '| id_user = ' + CONVERT(VARCHAR, @new_id_user) +
+	'| insert_date = ' + CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' + CONVERT(VARCHAR, @new_id_user_update) +
+	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
+	
+-- Obtenemos el id de la bitacora
+	SELECT @id = isNull(MAX(id_binnacle), 0)
+	FROM dbfriday.dbo.tbl_binnacle
+	
+	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
+	VALUES(@id + 1, 'INSERT', 'TBL_PATIENT', @new_data , '', getdate())
+
+-- Triger para la tabla tbl_patient UPDATE
+CREATE OR REPLACE TRIGGER dbo.tg_update_patient
+ON dbo.tbl_patient
+FOR UPDATE
+AS
+-- Declaramos variables 
+	DECLARE 
+	@new_id INT, 
+	@new_name VARCHAR(45),
+	@new_last_name VARCHAR(45), 
+	@new_birthdate DATE,
+	@new_gender INT, 
+	@new_personality VARCHAR(45),
+	@new_ci VARCHAR(45),
+	@new_character VARCHAR(45),
+	@new_email VARCHAR(50),
+	@new_id_user INT,
+	@new_insert_date DATETIME,
+	@new_id_user_update INT,
+	@new_update_date DATETIME,
+	@old_id INT, 
+	@old_name VARCHAR(45),
+	@old_last_name VARCHAR(45), 
+	@old_birthdate DATE,
+	@old_gender INT, 
+	@old_personality VARCHAR(45),
+	@old_ci VARCHAR(45),
+	@old_character VARCHAR(45),
+	@old_email VARCHAR(50),
+	@old_id_user INT,
+	@old_insert_date DATETIME,
+	@old_id_user_update INT,
+	@old_update_date DATETIME,
+	@id INT,
+	@new_data VARCHAR(400),
+	@old_data VARCHAR(400)
+	
+--	Obtenemos los datos nuevos
+	SELECT @new_id = id_patient, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate,
+	@new_gender = gender, @new_personality = personality, @new_ci = ci, @new_character = [character],
+	@new_email = email, @new_id_user =  id_user, @new_insert_date =  insert_date,
+	@new_id_user_update =  id_user_update, @new_update_date  = update_date
+	FROM inserted
+
+	
+-- creamos la cadena de los datos nuevos
+	SET @new_data = 'id_user = ' + CONVERT(VARCHAR, @new_id) + '| name = ' + @new_name + '| last_name = ' + @new_last_name +
+	'| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + '| gender = ' + CONVERT(VARCHAR, @new_gender) + '| personality = ' + @new_personality + 
+	'| ci = ' + @new_ci + '| character = ' + @new_character + '| email = ' + @new_email + '| id_user = ' + CONVERT(VARCHAR, @new_id_user) +
+	'| insert_date = ' + CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' + CONVERT(VARCHAR, @new_id_user_update) +
+	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
+
+--	Obtenemos los datos viejos
+	SELECT @old_id = id_patient, @old_name = name, @old_last_name = last_name, @old_birthdate = birthdate,
+	@old_gender = gender, @old_personality = personality, @old_ci = ci, @old_character = [character],
+	@old_email = email, @old_id_user =  id_user, @old_insert_date =  insert_date,
+	@old_id_user_update =  id_user_update, @old_update_date  = update_date
+	FROM deleted
+
+-- creamos la cadena de los datos viejos
+	SET @old_data = 'id_user = ' + CONVERT(VARCHAR, @old_id) + '| name = ' + @old_name + '| last_name = ' + @old_last_name +
+	'| birthdate = ' + CONVERT(VARCHAR, @old_birthdate) + '| gender = ' + CONVERT(VARCHAR, @old_gender) + '| personality = ' + @old_personality + 
+	'| ci = ' + @old_ci + '| character = ' + @old_character + '| email = ' + @old_email + '| id_user = ' + CONVERT(VARCHAR, @old_id_user) +
+	'| insert_date = ' + CONVERT(VARCHAR, @old_insert_date) + '| id_user_update = ' + CONVERT(VARCHAR, @old_id_user_update) +
+	'| update_date = ' + CONVERT(VARCHAR, @old_update_date)
+	
+-- Obtenemos el id de la bitacora
+	SELECT @id = isNull(MAX(id_binnacle), 0)
+	FROM dbfriday.dbo.tbl_binnacle
+	
+	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
+	VALUES(@id + 1, 'UPDATE', 'TBL_PATIENT', @new_data , @old_data, getdate())
