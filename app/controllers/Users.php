@@ -50,7 +50,8 @@ class Users extends MainController
         $parameters = [
             'users' => $users,
             'disabled_users' => $disabled_users,
-            'alert' => $alert
+            'alert' => $alert,
+            'menu' => 'Usuarios'
         ];
 
         // Llamamos la vista y enviamos los parámetros
@@ -114,8 +115,7 @@ class Users extends MainController
         $this->view('users/enable', $parameters);
     }
 
-    public function update($id = 0, $alert = '')
-    {
+    public function update($id = 0, $alert = ''){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Limpiamos los datos para prevenir inyección de código
@@ -148,8 +148,7 @@ class Users extends MainController
         $this->view('users/update', $parameters);
     }
 
-    public function change_password($id = 0, $alert = '')
-    {
+    public function change_password($id = 0, $alert = ''){
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Limpiamos los datos para prevenir inyección de código

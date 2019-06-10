@@ -2,12 +2,12 @@
     
     // Establecemos el tamaño de la ventana
     
-    if (screen.width < 768) {
+    // if (screen.width < 768) {
         var height = $(window).height();
         // var chat = document.getElementById("chat-container");
         // chat.height = height;
         $('#chat-container').height(height);
-    }
+    // }
 
     // funcion para hacer una pausa en ms
     function sleep(milliseconds) {
@@ -74,6 +74,7 @@
         // Realizamos nuestra pericion AJAX
         var petition = new XMLHttpRequest();
 
+        // petition.open('POST', 'http://192.168.0.109/proyecto-viernes/Conversation');
         petition.open('POST', 'http://localhost/proyecto-viernes/Conversation');
         // Establecemos el header de como queremos envier nuestra peticion
         petition.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -97,7 +98,7 @@
         other_message_content.setAttribute('class', 'message-content');
 
         var other_message_image = document.createElement('img');
-        other_message_image.setAttribute("src", "img/01.jpg");
+        other_message_image.setAttribute("src", "img/viernes.png");
 
         var other_message_text = document.createElement('div');
         other_message_text.setAttribute('class', 'message-text');
@@ -112,7 +113,7 @@
         other_message_content.appendChild(other_message_time);
         other_message_row.appendChild(other_message_content);
 
-        sleep(600);
+        sleep(1000);
 
         // Agregamos el nuevo mensaje
         other_message_list.appendChild(other_message_row);
