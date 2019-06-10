@@ -1,6 +1,6 @@
 <?php
     // Credenciales de acceso a la base de datos
-    define('DB_HOST', 'SOUL:5000');
+    define('DB_HOST', 'yanci-pc:5000');
     define('DB_USER', 'sa');
     define('DB_NAME', 'dbfriday');
     define('DB_PASS', '123456');

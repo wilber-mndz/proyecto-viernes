@@ -8,7 +8,7 @@
     <div class="card-body">
         <!-- Formulario nuevo usuario -->
         <form action="<?php echo ROUTE_URL?>/users/update/<?php echo $parameters['user']->id_user ?>" method="post"
-            id="form-usuario">
+            id="form-update">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-6">
@@ -79,6 +79,21 @@
                 </div>
             </div>
             <input type="submit" class="btn btn-info" name="guardar" value="Guardar">
+
+                <!-- llamar las validaciones js -->
+                <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger errors" style="display:none" id="errores"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <input type="submit" class="btn btn-info" name="guardar" value="Guardar">
+                </div>
+            </form>
+
         </form>
     </div>
     <!-- Formulario nuevo usuario -->
