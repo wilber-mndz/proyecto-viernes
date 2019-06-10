@@ -32,7 +32,7 @@
                     <div class="card-header text-center">
                         <h2 class="title">Iniciar sesión</h2>
                     </div>
-                    <form action="<?php echo ROUTE_URL?>/login" method = 'POST'>
+                    <form action="<?php echo ROUTE_URL?>/login" method = 'POST' id="login">
                     <div class="card-body">
                         
                         <div class="row">
@@ -43,7 +43,7 @@
                                             <i class="fas fa-envelope"></i>
                                         </div>
                                     </div>
-                                    <input type="email" class="form-control" name="email" placeholder="Ingrese su correo" required>
+                                    <input type="email" class="form-control" name="email" id = "email" placeholder="Ingrese su correo" required>
                                 </div>
                             </div>
                         </div>
@@ -56,20 +56,29 @@
                                             <i class="fas fa-key"></i>
                                         </div>
                                     </div>
-                                    <input type="password" class="form-control" name="password" placeholder="Ingrese su contraseña" required>
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Ingrese su contraseña" required>
                                 </div>
                             </div>
                         </div>
+                            
+                 <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $parameters['errors'] != ''):?>
+                    <div class="row">
+                         <div class="col-md-12">
+                            <div class="alert alert-danger">
+                              <?php echo $parameters['errors']?>
+                            </div>
+                        </div>
+                        </div>
+                <?php endif;?> 
 
-                        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $parameters['errors'] != ''):?>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="alert alert-danger">
-                                    <?php echo $parameters['errors']?>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endif;?>
+                   <!-- llama los errores de las validaciones de js -->
+             <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-danger errores" id="errores" style="display:none">
+
+                </div>
+                </div>
+                </div>
 
                     </div>
                     <div class="card-footer">
@@ -100,6 +109,8 @@
     <script src="<?php echo ROUTE_URL?>/assets/demo/demo.js"></script>
     <!-- Sweet alert -->
     <script src="<?php echo ROUTE_URL?>/js/sweetalert.js"></script>
+      <!-- llama las validaciones js -->
+  <script src="<?php echo ROUTE_URL?>/js/validaciones.js"></script>
 </body>
 
 </html>

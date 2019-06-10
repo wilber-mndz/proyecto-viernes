@@ -85,7 +85,7 @@
                 </button>
             </div>
             <!-- Formulario nuevo usuario -->
-            <form action="<?php echo ROUTE_URL?>/users/" method="post" id="form-usuario" id="form-usuario">
+            <form action="<?php echo ROUTE_URL?>/users/" method="post" id="form-usuario">
                 <div class="modal-body">
 
                     <div class="row">
@@ -165,7 +165,7 @@
                             </div>
                         </div>
                     </div>
-                    
+                    <!-- llamar las validaciones js -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger errors" style="display:none" id="errores"></div>
