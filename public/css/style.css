@@ -12,8 +12,6 @@ html, body {
 html {
   font-family: 'Roboto', sans-serif;
   font-size: 10px;
-  background: -webkit-gradient(linear, left top, right top, from(#57c1eb), to(#246fa8));
-  background: linear-gradient(to right, #57c1eb 0%, #246fa8 100%);
 }
 
 body {
@@ -25,13 +23,12 @@ body {
 .chat-container {
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: 300px 1fr;
-      grid-template-columns: 300px 1fr;
-  -ms-grid-rows: 71px 1fr 78px;
-      grid-template-rows: 71px 1fr 78px;
+  -ms-grid-columns: 340px 1fr;
+      grid-template-columns: 340px 1fr;
+  -ms-grid-rows: 50px 1fr 78px;
+      grid-template-rows: 50px 1fr 78px;
       grid-template-areas: 'bot-name chat-title' 'bot-info chat-message-list' 'bot-info chat-form';
-  min-width: 800px;
-  max-width: 1000px;
+  width: 100%;
   max-height: 800px;
   height: 95vh;
   background: #fff;
@@ -53,7 +50,6 @@ body {
   -ms-grid-row: 1;
   -ms-grid-column: 1;
   grid-area: bot-name;
-  border-radius: 10px 0 0;
   -webkit-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.75);
           box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.75);
   z-index: 1;
@@ -105,7 +101,6 @@ body {
   -ms-grid-row-span: 2;
   -ms-grid-column: 1;
   grid-area: bot-info;
-  border-radius: 0px 0px 0px 10px;
 }
 
 .bot-info .picture {
@@ -116,10 +111,96 @@ body {
   -webkit-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.75);
           box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.75);
   border-radius: 50%;
+  overflow: hidden;
+}
+
+.bot-info .picture img {
+  width: 100%;
 }
 
 .bot-info .active {
   background: #002C88;
+}
+
+.bot-info .login-button {
+  text-align: center;
+  padding: 20px;
+}
+
+.bot-info .form-login {
+  text-align: center;
+  padding: 20px 40px;
+}
+
+.bot-info .form-login h3 {
+  color: #EEEEEE;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.bot-info .form-login input {
+  outline: none;
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #ddd;
+  color: #330;
+  border-radius: 6px;
+  font-size: 1.4rem;
+}
+
+.bot-info .form-login button {
+  width: 100%;
+  border-radius: 4px;
+  background-color: #EEEEEE;
+  border: none;
+  color: #000;
+  text-align: center;
+  font-size: 18px;
+  padding: 5px;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  cursor: pointer;
+}
+
+.bot-info .form-login button:hover {
+  background: #e2e2e2;
+}
+
+.bot-info .form-login a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+.bot-info .form-login a:hover {
+  border-bottom: 1px solid #fff;
+}
+
+.bot-info .patient-info {
+  text-align: center;
+  padding: 20px 40px;
+}
+
+.bot-info .patient-info h3 {
+  color: #EEEEEE;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.bot-info .patient-info .patient-name {
+  color: #EEEEEE;
+  font-size: 14px;
+}
+
+.bot-info .patient-info .options {
+  margin-top: 20px;
+}
+
+.bot-info .patient-info .options a {
+  text-decoration: none;
+  color: #EEEEEE;
+  font-size: 14px;
+  margin: 0px 10px;
 }
 
 .conversation {
@@ -211,7 +292,6 @@ body {
   color: #0048aa;
   font-weight: bold;
   font-size: 2.0rem;
-  border-radius: 0 10px 0 0;
   -webkit-box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.75);
           box-shadow: 0 1px 3px -1px rgba(0, 0, 0, 0.75);
   padding: 0 20px;
@@ -219,6 +299,7 @@ body {
 
 .chat-title > i {
   cursor: pointer;
+  display: none;
 }
 
 .chat-message-list {
@@ -235,7 +316,7 @@ body {
   display: grid;
   -ms-grid-columns: 70%;
       grid-template-columns: 70%;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .message-content {
@@ -308,7 +389,6 @@ body {
   -ms-grid-row: 3;
   -ms-grid-column: 2;
   grid-area: chat-form;
-  border-radius: 0 0 10px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.25);
   padding-left: 42px;
   padding-right: 22px;
@@ -349,6 +429,10 @@ body {
     border-radius: 0px;
     background: #0048AA;
     color: #EEEEEE;
+  }
+  .chat-title > i {
+    cursor: pointer;
+    display: inline-block;
   }
   .chat-message-list {
     -ms-grid-row: 2;
