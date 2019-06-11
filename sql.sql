@@ -204,46 +204,50 @@ CREATE OR REPLACE proc add_answer
 	@id_user VARCHAR(11),
 	@answer VARCHAR(500),
 	@id_user_update VARCHAR(11)
-	
+
 AS
 BEGIN
 --	Declaramos variable para obtener el id anterior
 	DECLARE @id int
-	
+
 --	Obtenemos el id anterior
 	SELECT @id = isNull(MAX(id_user), 0) + 1
 	FROM dbfriday.dbo.tbl_answers
-	
+
 -- guardamos los datos del usuario
 	INSERT INTO dbfriday.dbo.tbl_answers
 	(id_answer, id_user, answer, insert_date, id_user_update, update_date)
 	VALUES(@id, CONVERT(INT, @id_user), @answer, getdate(), CONVERT(INT, @id_user), getdate())
 END
 
-
--- Procedimiento para guardar un nuevo paciente
-CREATE OR REPLACE proc add_patient
-	@name VARCHAR(45),
-	@last_name VARCHAR(45),
-	@birthdate DATE,
-	@gender VARCHAR(1),
-	@email VARCHAR(50),
-	@password VARCHAR(400),
-	@id_user INT
+-- Procedimiento para Actualizar Pacientes
+CREATE OR REPLACE proc update_patient
+@name VARCHAR(45),
+@last_name VARCHAR(45),
+@birthdate DATE,
+@gender VARCHAR(1),
+@email VARCHAR(50),
+@id_user INT,
+@id VARCHAR(10)
 AS
 BEGIN
---	Declaramos variable para obtener el id anterior
-	DECLARE @id int
-	
---	Obtenemos el id anterior
-	SELECT @id = isNull(MAX(id_patient), 0) + 1
-	FROM dbfriday.dbo.tbl_patient
-	
--- guardamos los datos del paciente
-	INSERT INTO dbfriday.dbo.tbl_patient
-	(id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, password, id_user, insert_date, id_user_update, update_date)
-	VALUES(@id, @name, @last_name, @birthdate, CONVERT(INT, @gender), '', '', '', @email, @password, CONVERT(INT, @id_user), getdate(), CONVERT(INT, @id_user), getdate())
-	
+-- guardamos los datos del Paciente
+UPDATE dbfriday.dbo.tbl_patient
+SET name=@name, last_name=@last_name, birthdate = @birthdate, gender=CONVERT(int, @gender), email=@email, id_user_update=@id_user, update_date=getdate()
+WHERE id_patient=CONVERT(int, @id)
+END
+
+-- Procedimiento para Actualizar contraseña de los Pacientes
+CREATE OR REPLACE proc update_passwordPatient
+	@password VARCHAR(400),
+	@id_user INT,
+	@id VARCHAR(10)
+AS
+BEGIN
+-- guardamos la contraseña del Paciente
+	UPDATE dbfriday.dbo.tbl_patient
+	SET password=@password, id_user_update=@id_user, update_date=getdate()
+	WHERE id_patient=CONVERT(int, @id)
 END
 
 -- TRIGGERS
@@ -254,26 +258,26 @@ CREATE OR REPLACE TRIGGER dbo.tg_insert_users
 ON dbo.tbl_users
 FOR INSERT
 AS
--- Declaramos variables 
+-- Declaramos variables
 	DECLARE @new_id INT, @new_name VARCHAR(45), @new_last_name VARCHAR(45), @new_birthdate DATE,
 	@new_gender INT, @new_email VARCHAR(50), @new_user_type INT, @new_status INT, @id INT,
 	@new_data VARCHAR(300)
-	
+
 --	Obtenemos los datos nuevos
-	SELECT @new_id = id_user, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate, 
+	SELECT @new_id = id_user, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate,
 	@new_gender = gender, @new_email = email, @new_user_type = user_type, @new_status = status
 	FROM inserted
-	
+
 -- creamos la cadena de los datos nuevos
 	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + '| name = ' + @new_name +
-	'| last_name = ' + @new_last_name + '| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
-	'| gender = ' +	CONVERT(VARCHAR, @new_gender) + '| email = ' + @new_email + '| user_type = ' + 
+	'| last_name = ' + @new_last_name + '| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) +
+	'| gender = ' +	CONVERT(VARCHAR, @new_gender) + '| email = ' + @new_email + '| user_type = ' +
 	CONVERT(VARCHAR, @new_user_type) + '| status = ' + CONVERT(VARCHAR, @new_status)
-	
+
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
 	FROM dbfriday.dbo.tbl_binnacle
-	
+
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'INSERT', 'TBL_USERS', @new_data , '', getdate())
 
@@ -283,39 +287,39 @@ CREATE OR REPLACE TRIGGER dbo.tg_update_users
 ON dbo.tbl_users
 FOR UPDATE
 AS
--- Declaramos variables 
+-- Declaramos variables
 	DECLARE @old_id INT, @old_name VARCHAR(45), @old_last_name VARCHAR(45), @old_birthdate DATE,
 	@old_gender INT, @old_email VARCHAR(50), @old_user_type INT, @old_status INT,
 	@new_id INT, @new_name VARCHAR(45), @new_last_name VARCHAR(45), @new_birthdate DATE,
 	@new_gender INT, @new_email VARCHAR(50), @new_user_type INT, @new_status INT, @id INT,
 	@old_data VARCHAR(300), @new_data VARCHAR(300)
-	
+
 --	Obtenemos los datos viejos
-	SELECT @old_id = id_user, @old_name = name, @old_last_name = last_name, @old_birthdate = birthdate, 
+	SELECT @old_id = id_user, @old_name = name, @old_last_name = last_name, @old_birthdate = birthdate,
 	@old_gender = gender, @old_email = email, @old_user_type = user_type, @old_status = status
 	FROM deleted
-		
+
 -- creamos la cadena de los datos viejos
 	SET @old_data = 'id_user = ' + convert(varchar, @old_id) + '| name = ' + @old_name +
-	'| last_name = ' + @old_last_name + '| birthdate = ' + CONVERT(VARCHAR, @old_birthdate) + 
-	'| gender = ' +	CONVERT(VARCHAR, @old_gender) + '| email = ' + @old_email + '| user_type = ' + 
+	'| last_name = ' + @old_last_name + '| birthdate = ' + CONVERT(VARCHAR, @old_birthdate) +
+	'| gender = ' +	CONVERT(VARCHAR, @old_gender) + '| email = ' + @old_email + '| user_type = ' +
 	CONVERT(VARCHAR, @old_user_type) + '| status = ' + CONVERT(VARCHAR, @old_status)
-	
+
 --	Obtenemos los datos nuevos
-	SELECT @new_id = id_user, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate, 
+	SELECT @new_id = id_user, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate,
 	@new_gender = gender, @new_email = email, @new_user_type = user_type, @new_status = status
 	FROM inserted
-	
+
 -- creamos la cadena de los datos nuevos
 	SET @new_data = 'id_user = ' + convert(varchar, @new_id) + '| name = ' + @new_name +
-	'| last_name = ' + @new_last_name + '| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + 
-	'| gender = ' +	CONVERT(VARCHAR, @new_gender) + '| email = ' + @new_email + '| user_type = ' + 
+	'| last_name = ' + @new_last_name + '| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) +
+	'| gender = ' +	CONVERT(VARCHAR, @new_gender) + '| email = ' + @new_email + '| user_type = ' +
 	CONVERT(VARCHAR, @new_user_type) + '| status = ' + CONVERT(VARCHAR, @new_status)
-	
+
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
 	FROM dbfriday.dbo.tbl_binnacle
-	
+
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'UPDATE', 'TBL_USERS', @new_data , @old_data, getdate())
 
@@ -324,25 +328,25 @@ CREATE OR REPLACE TRIGGER dbo.tg_insert_answer
 ON dbo.tbl_answers
 FOR INSERT
 AS
--- Declaramos variables 
+-- Declaramos variables
 	DECLARE @new_id INT, @new_id_user INT, @new_answer VARCHAR(500), @new_insert_date DATETIME,
 	@new_id_user_update INT, @new_update_date DATETIME, @new_data VARCHAR(400), @id INT
-	
+
 --	Obtenemos los datos nuevos
 	SELECT @new_id = id_answer, @new_id_user = id_user, @new_answer = answer, @new_insert_date = insert_date,
 	@new_id_user_update = id_user_update, @new_update_date = update_date
 	FROM inserted
 
 -- creamos la cadena de los datos nuevos
-	SET @new_data = 'id_answer = ' + convert(varchar, @new_id) + '| id_user = ' + 
-	CONVERT(varchar, @new_id_user) + '| answer = ' + @new_answer + '| insert_date = ' 
+	SET @new_data = 'id_answer = ' + convert(varchar, @new_id) + '| id_user = ' +
+	CONVERT(varchar, @new_id_user) + '| answer = ' + @new_answer + '| insert_date = '
 	+ CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' +	CONVERT(VARCHAR, @new_id_user_update) +
 	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
-	
+
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
 	FROM dbfriday.dbo.tbl_binnacle
-	
+
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'INSERT', 'TBL_ANSWERS', @new_data , '', getdate())
 
@@ -351,21 +355,21 @@ CREATE OR REPLACE TRIGGER dbo.tg_update_answer
 ON dbo.tbl_answers
 FOR UPDATE
 AS
--- Declaramos variables 
+-- Declaramos variables
 	DECLARE @new_id INT, @new_id_user INT, @new_answer VARCHAR(500), @new_insert_date DATETIME,
 	@new_id_user_update INT, @new_update_date DATETIME, @new_data VARCHAR(400),
     @old_id INT, @old_id_user INT, @old_answer VARCHAR(500), @old_insert_date DATETIME,
 	@old_id_user_update INT, @old_update_date DATETIME, @old_data VARCHAR(400),
     @id INT
-	
+
 --	Obtenemos los datos nuevos
 	SELECT @new_id = id_answer, @new_id_user = id_user, @new_answer = answer, @new_insert_date = insert_date,
 	@new_id_user_update = id_user_update, @new_update_date = update_date
 	FROM inserted
 
 -- creamos la cadena de los datos nuevos
-	SET @new_data = 'id_answer = ' + convert(varchar, @new_id) + '| id_user = ' + 
-	CONVERT(varchar, @new_id_user) + '| answer = ' + @new_answer + '| insert_date = ' 
+	SET @new_data = 'id_answer = ' + convert(varchar, @new_id) + '| id_user = ' +
+	CONVERT(varchar, @new_id_user) + '| answer = ' + @new_answer + '| insert_date = '
 	+ CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' +	CONVERT(VARCHAR, @new_id_user_update) +
 	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
 
@@ -375,15 +379,15 @@ AS
 	FROM deleted
 
 -- creamos la cadena de los datos viejos
-	SET @old_data = 'id_answer = ' + convert(varchar, @old_id) + '| id_user = ' + 
-	CONVERT(varchar, @old_id_user) + '| answer = ' + @old_answer + '| insert_date = ' 
+	SET @old_data = 'id_answer = ' + convert(varchar, @old_id) + '| id_user = ' +
+	CONVERT(varchar, @old_id_user) + '| answer = ' + @old_answer + '| insert_date = '
 	+ CONVERT(VARCHAR, @old_insert_date) + '| id_user_update = ' +	CONVERT(VARCHAR, @old_id_user_update) +
 	'| update_date = ' + CONVERT(VARCHAR, @old_update_date)
-	
+
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
 	FROM dbfriday.dbo.tbl_binnacle
-	
+
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'UPDATE', 'TBL_ANSWERS', @new_data , @old_data, getdate())
 
@@ -396,13 +400,13 @@ CREATE OR REPLACE TRIGGER dbo.tg_insert_patient
 ON dbo.tbl_patient
 FOR INSERT
 AS
--- Declaramos variables 
-	DECLARE 
-	@new_id INT, 
+-- Declaramos variables
+	DECLARE
+	@new_id INT,
 	@new_name VARCHAR(45),
-	@new_last_name VARCHAR(45), 
+	@new_last_name VARCHAR(45),
 	@new_birthdate DATE,
-	@new_gender INT, 
+	@new_gender INT,
 	@new_personality VARCHAR(45),
 	@new_ci VARCHAR(45),
 	@new_character VARCHAR(45),
@@ -413,7 +417,7 @@ AS
 	@new_update_date DATETIME,
 	@id INT,
 	@new_data VARCHAR(400)
-	
+
 --	Obtenemos los datos nuevos
 	SELECT @new_id = id_patient, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate,
 	@new_gender = gender, @new_personality = personality, @new_ci = ci, @new_character = [character],
@@ -421,18 +425,18 @@ AS
 	@new_id_user_update =  id_user_update, @new_update_date  = update_date
 	FROM inserted
 
-	
+
 -- creamos la cadena de los datos nuevos
 	SET @new_data = 'id_user = ' + CONVERT(VARCHAR, @new_id) + '| name = ' + @new_name + '| last_name = ' + @new_last_name +
-	'| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + '| gender = ' + CONVERT(VARCHAR, @new_gender) + '| personality = ' + @new_personality + 
+	'| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + '| gender = ' + CONVERT(VARCHAR, @new_gender) + '| personality = ' + @new_personality +
 	'| ci = ' + @new_ci + '| character = ' + @new_character + '| email = ' + @new_email + '| id_user = ' + CONVERT(VARCHAR, @new_id_user) +
 	'| insert_date = ' + CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' + CONVERT(VARCHAR, @new_id_user_update) +
 	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
-	
+
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
 	FROM dbfriday.dbo.tbl_binnacle
-	
+
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'INSERT', 'TBL_PATIENT', @new_data , '', getdate())
 
@@ -441,13 +445,13 @@ CREATE OR REPLACE TRIGGER dbo.tg_update_patient
 ON dbo.tbl_patient
 FOR UPDATE
 AS
--- Declaramos variables 
-	DECLARE 
-	@new_id INT, 
+-- Declaramos variables
+	DECLARE
+	@new_id INT,
 	@new_name VARCHAR(45),
-	@new_last_name VARCHAR(45), 
+	@new_last_name VARCHAR(45),
 	@new_birthdate DATE,
-	@new_gender INT, 
+	@new_gender INT,
 	@new_personality VARCHAR(45),
 	@new_ci VARCHAR(45),
 	@new_character VARCHAR(45),
@@ -456,11 +460,11 @@ AS
 	@new_insert_date DATETIME,
 	@new_id_user_update INT,
 	@new_update_date DATETIME,
-	@old_id INT, 
+	@old_id INT,
 	@old_name VARCHAR(45),
-	@old_last_name VARCHAR(45), 
+	@old_last_name VARCHAR(45),
 	@old_birthdate DATE,
-	@old_gender INT, 
+	@old_gender INT,
 	@old_personality VARCHAR(45),
 	@old_ci VARCHAR(45),
 	@old_character VARCHAR(45),
@@ -472,7 +476,7 @@ AS
 	@id INT,
 	@new_data VARCHAR(400),
 	@old_data VARCHAR(400)
-	
+
 --	Obtenemos los datos nuevos
 	SELECT @new_id = id_patient, @new_name = name, @new_last_name = last_name, @new_birthdate = birthdate,
 	@new_gender = gender, @new_personality = personality, @new_ci = ci, @new_character = [character],
@@ -480,10 +484,10 @@ AS
 	@new_id_user_update =  id_user_update, @new_update_date  = update_date
 	FROM inserted
 
-	
+
 -- creamos la cadena de los datos nuevos
 	SET @new_data = 'id_user = ' + CONVERT(VARCHAR, @new_id) + '| name = ' + @new_name + '| last_name = ' + @new_last_name +
-	'| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + '| gender = ' + CONVERT(VARCHAR, @new_gender) + '| personality = ' + @new_personality + 
+	'| birthdate = ' + CONVERT(VARCHAR, @new_birthdate) + '| gender = ' + CONVERT(VARCHAR, @new_gender) + '| personality = ' + @new_personality +
 	'| ci = ' + @new_ci + '| character = ' + @new_character + '| email = ' + @new_email + '| id_user = ' + CONVERT(VARCHAR, @new_id_user) +
 	'| insert_date = ' + CONVERT(VARCHAR, @new_insert_date) + '| id_user_update = ' + CONVERT(VARCHAR, @new_id_user_update) +
 	'| update_date = ' + CONVERT(VARCHAR, @new_update_date)
@@ -497,14 +501,14 @@ AS
 
 -- creamos la cadena de los datos viejos
 	SET @old_data = 'id_user = ' + CONVERT(VARCHAR, @old_id) + '| name = ' + @old_name + '| last_name = ' + @old_last_name +
-	'| birthdate = ' + CONVERT(VARCHAR, @old_birthdate) + '| gender = ' + CONVERT(VARCHAR, @old_gender) + '| personality = ' + @old_personality + 
+	'| birthdate = ' + CONVERT(VARCHAR, @old_birthdate) + '| gender = ' + CONVERT(VARCHAR, @old_gender) + '| personality = ' + @old_personality +
 	'| ci = ' + @old_ci + '| character = ' + @old_character + '| email = ' + @old_email + '| id_user = ' + CONVERT(VARCHAR, @old_id_user) +
 	'| insert_date = ' + CONVERT(VARCHAR, @old_insert_date) + '| id_user_update = ' + CONVERT(VARCHAR, @old_id_user_update) +
 	'| update_date = ' + CONVERT(VARCHAR, @old_update_date)
-	
+
 -- Obtenemos el id de la bitacora
 	SELECT @id = isNull(MAX(id_binnacle), 0)
 	FROM dbfriday.dbo.tbl_binnacle
-	
+
 	INSERT INTO dbo.tbl_binnacle(id_binnacle, operation, table_name, new_data, old_data, dt)
 	VALUES(@id + 1, 'UPDATE', 'TBL_PATIENT', @new_data , @old_data, getdate())

@@ -110,7 +110,7 @@
                             <div class="form-group">
                                 <label for="birthdate">Fecha de nacimiento</label>
                                 <input type="text" class="form-control" name="birthdate" id="birthdate"
-                                    placeholder="Ingrese fecha de nacimiento">
+                                    placeholder="YYYY-MM-DD">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -165,7 +165,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger errors" style="display:none" id="errores"></div>

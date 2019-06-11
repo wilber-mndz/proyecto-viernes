@@ -1,23 +1,23 @@
 (function(){
     //Acceso al formulario
     var formulario= document.getElementById('form-usuario');
-   
-    var firs_name = formulario.first_name;  
-    var last_name = formulario.last_name; 
+
+    var firs_name = formulario.first_name;
+    var last_name = formulario.last_name;
     var gender = formulario.gender;
-    var email = formulario.email;      
+    var email = formulario.email;
     var birthdate = formulario.birthdate;
-    var user_type = formulario.user_type; 
-    var password = formulario.password;   
-    var password2 = formulario.password2;  
-  
+    var user_type = formulario.user_type;
+    var password = formulario.password;
+    var password2 = formulario.password2;
+
     //Accedemos al contenedor de errores
     var errores = document.getElementById('errores');
-  
+
     function validarFirst_name(e){
       if (firs_name.value == '' || firs_name.value == null) {
         errores.style.display = 'block';
-        errores.innerHTML += '<p>Por favor Ingrese el nombre</p>'; 
+        errores.innerHTML += '<p>Por favor Ingrese el nombre</p>';
         e.preventDefault();
       }else if (firs_name.value.length > 50) {
         errores.style.display = 'block';
@@ -25,7 +25,7 @@
         e.preventDefault();
       }
     }
-  
+
     function validarLast_name(e){
       if (last_name.value == '' || last_name.value == null) {
         errores.style.display = 'block';
@@ -37,7 +37,7 @@
         e.preventDefault();
       }
     }
-  
+
     function validarGender(e){
       if (gender.value == '' || gender.value == null) {
         errores.style.display = 'block';
@@ -66,7 +66,7 @@
         e.preventDefault();
       }
     }
-  
+
     function validarUserType(e){
       if (user_type.value == '' || user_type.value == null) {
         errores.style.display = 'block';
@@ -74,7 +74,7 @@
         e.preventDefault();
       }
     }
-  
+
     function validarPassword(e){
       if (password.value == '' || password.value == null) {
         //console.log('Ingrese Nombre');
@@ -87,7 +87,7 @@
         e.preventDefault();
       }
     }
-  
+
     function validarPassword2(e) {
       if (password.value != password2.value) {
         errores.style.display = 'block';
@@ -95,7 +95,7 @@
         e.preventDefault();
       }
     }
-  
+
     function validarFormulario(e){
       //Limpiar contenedor
       errores.innerHTML = '';
@@ -108,12 +108,11 @@
       validarPassword(e);
       validarPassword2(e);
     }
-  
-  
+
+
     formulario.addEventListener('submit', validarFormulario);
     //Mascara de Texto para usuario
   $(document).ready(function(){
-    $('#birthdate').mask('00-00-00');
+    $('#birthdate').mask('0000-00-00');
 });
   }());
-  

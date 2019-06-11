@@ -3,12 +3,10 @@ class Patient extends MainController
 {
     public function __construct(){
         sessionUser();
-
         $this->ModelPatient = $this->model('ModelPatient');
     }
 
     public function index($alert = ''){
-
         $patients = $this->ModelPatient->get_patients();
 
         $parameters = [
@@ -63,6 +61,70 @@ class Patient extends MainController
 
         // llamamos la vista y mandamos los parámetros
         $this->view('patient/info', $parameters);
+    }
+
+    public function update($id = 0, $alert = ''){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Limpiamos los datos para prevenir inyección de código
+            $patient['name'] = sanitize($_POST['name']);
+            $patient['last_name'] = sanitize($_POST['last_name']);
+            $patient['birthdate'] = sanitize($_POST['birthdate']);
+            $patient['gender'] = sanitize($_POST['gender']);
+            $patient['email'] = sanitize($_POST['email']);
+            $patient['id_user'] = $_SESSION['user']->id_user;
+
+            if ($this->ModelPatient->update_patient($id, $patient)) {
+                header("location:".ROUTE_URL."/patient/update/".$id."/saved");
+                //redirect('/users/saved');
+            } else {
+                die('Error al guardar los datos');
+            }
+      }
+
+        $patient = $this->ModelPatient->get_patient($id);
+        if (!$patient) {
+             header('location:'.ROUTE_URL.'/patient');
+        }
+
+        $parameters = [
+            'menu' => 'Pacientes',
+            'patient' => $patient,
+            'alert' => $alert
+        ];
+
+        $this->view('patient/update', $parameters);
+    }
+
+    public function change_password($id = 0, $alert = ''){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Limpiamos los datos para prevenir inyección de código
+            $patient['password'] = hash('sha512', SALT . sanitize($_POST['password']));
+            $patient['id_user'] = $_SESSION['user']->id_user;
+
+
+            if ($this->ModelPatient->update_password($id, $patient)) {
+            header("location:".ROUTE_URL."/patient/change_password/".$id."/saved");
+                //redirect('/users/saved');
+            } else {
+                die('Error al guardar los datos');
+            }
+      }
+
+        $patient = $this->ModelPatient->get_patient($id);
+        if (!$patient) {
+            header('location:'.ROUTE_URL.'/change_password');
+        }
+
+        $parameters = [
+            'menu' => 'Pacientes',
+            'patient' => $patient,
+            'alert' => $alert
+        ];
+
+        $this->view('patient/change_password', $parameters);
+
     }
 }
 
