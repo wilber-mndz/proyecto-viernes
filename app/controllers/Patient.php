@@ -95,6 +95,37 @@ class Patient extends MainController
 
         $this->view('patient/update', $parameters);
     }
+
+    public function change_password($id = 0, $alert = ''){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Limpiamos los datos para prevenir inyección de código
+            $patient['password'] = hash('sha512', SALT . sanitize($_POST['password']));
+            $patient['id_user'] = $_SESSION['user']->id_user;
+
+
+            if ($this->ModelPatient->update_password($id, $patient)) {
+            header("location:".ROUTE_URL."/patient/change_password/".$id."/saved");
+                //redirect('/users/saved');
+            } else {
+                die('Error al guardar los datos');
+            }
+      }
+
+        $patient = $this->ModelPatient->get_patient($id);
+        if (!$patient) {
+            header('location:'.ROUTE_URL.'/change_password');
+        }
+
+        $parameters = [
+            'menu' => 'Pacientes',
+            'patient' => $patient,
+            'alert' => $alert
+        ];
+
+        $this->view('patient/change_password', $parameters);
+
+    }
 }
 
 

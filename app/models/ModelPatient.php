@@ -83,6 +83,25 @@ class ModelPatient
       return false;
       }
     }
+
+    public function update_password($id, $patient){
+
+        // Preparamos la consulta
+        $this->db->query(
+            "update_passwordPatient @password = :password,  @id_user = :id_user, @id = :id"
+        );
+
+        // Vinculamos los datos a nuestra consulta preparada
+        $this->db->bind(':password', $patient['password']);
+        $this->db->bind(':id_user', $patient['id_user']);
+        $this->db->bind(':id', $id);
+
+        if ($this->db->execute()) {
+          return true;
+        }else {
+          return false;
+        }
+    }
 }
 
 
