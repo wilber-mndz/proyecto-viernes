@@ -21,7 +21,7 @@
   <script src="<?php echo ROUTE_URL?>/assets/demo/demo.js"></script>
   <!-- Sweet alert -->
   <script src="<?php echo ROUTE_URL?>/js/sweetalert.js"></script>
-  <!-- llama las validaciones js -->
+  <script src="<?php echo ROUTE_URL?>/js/jquery.mask.js"></script>
   <script src="<?php echo ROUTE_URL?>/js/validaciones.js"></script>
   <script>
     $(document).ready(function() {
