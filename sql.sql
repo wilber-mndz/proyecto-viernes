@@ -220,6 +220,32 @@ BEGIN
 	VALUES(@id, CONVERT(INT, @id_user), @answer, getdate(), CONVERT(INT, @id_user), getdate())
 END
 
+
+-- Procedimiento para guardar un nuevo paciente
+CREATE OR REPLACE proc add_patient
+	@name VARCHAR(45),
+	@last_name VARCHAR(45),
+	@birthdate DATE,
+	@gender VARCHAR(1),
+	@email VARCHAR(50),
+	@password VARCHAR(400),
+	@id_user INT
+AS
+BEGIN
+--	Declaramos variable para obtener el id anterior
+	DECLARE @id int
+	
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_patient), 0) + 1
+	FROM dbfriday.dbo.tbl_patient
+	
+-- guardamos los datos del paciente
+	INSERT INTO dbfriday.dbo.tbl_patient
+	(id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, password, id_user, insert_date, id_user_update, update_date)
+	VALUES(@id, @name, @last_name, @birthdate, CONVERT(INT, @gender), '', '', '', @email, @password, CONVERT(INT, @id_user), getdate(), CONVERT(INT, @id_user), getdate())
+	
+END
+
 -- TRIGGERS
 -- -----------------------------------------------------------
 
