@@ -10,7 +10,7 @@
             <div class="col-md-6">
                 <p>Información personal</p>
                 <hr>
-                <p><b>Nombre: </b> <?php echo $parameters['patient']->name?></p>
+                <p><b>Nombre: </b> <?php echo $parameters['patient']->name. ' '.$parameters['patient']->last_name?></p>
                 <p><b>Sexo: </b> <?php echo $var = ($parameters['patient']->gender == '1')? 'Hombre' : 'Mujer'?></p>
                 <p><b>Fecha de nacimiento: </b> <?php echo date_format(new DateTime($parameters['patient']->birthdate), 'd-m-Y')?></p>
                 <p><b>Edad: </b><?php echo $parameters['patient']->age?> años</p>

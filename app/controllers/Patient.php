@@ -7,7 +7,6 @@ class Patient extends MainController
     }
 
     public function index($alert = ''){
-
         $patients = $this->ModelPatient->get_patients();
 
         $parameters = [
@@ -68,24 +67,25 @@ class Patient extends MainController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Limpiamos los datos para prevenir inyección de código
-            $patients['name'] = sanitize($_POST['first_name']);
-            $patients['last_name'] = sanitize($_POST['last_name']);
-            $patients['birthdate'] = sanitize($_POST['birthdate']);
-            $patients['gender'] = sanitize($_POST['gender']);
-            $patients['email'] = sanitize($_POST['email']);
+            $patient['name'] = sanitize($_POST['name']);
+            $patient['last_name'] = sanitize($_POST['last_name']);
+            $patient['birthdate'] = sanitize($_POST['birthdate']);
+            $patient['gender'] = sanitize($_POST['gender']);
+            $patient['email'] = sanitize($_POST['email']);
+            $patient['id_user'] = $_SESSION['user']->id_user;
 
-            if ($this->ModelPatient->update_patient($id, $patients)) {
-                header("location:".ROUTE_URL."/users/update/".$id."/saved");
+            if ($this->ModelPatient->update_patient($id, $patient)) {
+                header("location:".ROUTE_URL."/patient/update/".$id."/saved");
                 //redirect('/users/saved');
             } else {
                 die('Error al guardar los datos');
             }
       }
 
-        // $patients = $this->ModelPatient->get_user($id);
-        // if (!$patients) {
-        //     header('location:'.ROUTE_URL.'/patient');
-        // }
+        $patient = $this->ModelPatient->get_patient($id);
+        if (!$patient) {
+             header('location:'.ROUTE_URL.'/patient');
+        }
 
         $parameters = [
             'menu' => 'Pacientes',
