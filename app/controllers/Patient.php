@@ -3,7 +3,6 @@ class Patient extends MainController
 {
     public function __construct(){
         sessionUser();
-
         $this->ModelPatient = $this->model('ModelPatient');
     }
 
@@ -63,6 +62,38 @@ class Patient extends MainController
 
         // llamamos la vista y mandamos los parámetros
         $this->view('patient/info', $parameters);
+    }
+
+    public function update($id = 0, $alert = ''){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            // Limpiamos los datos para prevenir inyección de código
+            $patients['name'] = sanitize($_POST['first_name']);
+            $patients['last_name'] = sanitize($_POST['last_name']);
+            $patients['birthdate'] = sanitize($_POST['birthdate']);
+            $patients['gender'] = sanitize($_POST['gender']);
+            $patients['email'] = sanitize($_POST['email']);
+
+            if ($this->ModelPatient->update_patient($id, $patients)) {
+                header("location:".ROUTE_URL."/users/update/".$id."/saved");
+                //redirect('/users/saved');
+            } else {
+                die('Error al guardar los datos');
+            }
+      }
+
+        // $patients = $this->ModelPatient->get_user($id);
+        // if (!$patients) {
+        //     header('location:'.ROUTE_URL.'/patient');
+        // }
+
+        $parameters = [
+            'menu' => 'Pacientes',
+            'patient' => $patient,
+            'alert' => $alert
+        ];
+
+        $this->view('patient/update', $parameters);
     }
 }
 

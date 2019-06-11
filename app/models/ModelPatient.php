@@ -3,7 +3,7 @@
 class ModelPatient
 {
     private $db;
-    
+
     public function __construct(){
         $this->db = new Sql;
     }
@@ -22,11 +22,11 @@ class ModelPatient
 
         $this->db->query(
             "SELECT p.id_patient, (p.name +' ' + p.last_name) AS name, p.birthdate, DATEDIFF(hour,p.birthdate,GETDATE())/8766 AS age,
-            p.gender, p.personality, p.ci, p.[character], p.email, (ui.name +' ' + ui.last_name) AS user_insert, 
+            p.gender, p.personality, p.ci, p.[character], p.email, (ui.name +' ' + ui.last_name) AS user_insert,
             p.insert_date, (uu.name +' ' + uu.last_name) AS user_update, update_date
             FROM dbfriday.dbo.tbl_patient AS p
             INNER JOIN dbfriday.dbo.tbl_users AS ui ON ui.id_user = p.id_user
-            INNER JOIN dbfriday.dbo.tbl_users AS uu ON uu.id_user = p.id_user_update 
+            INNER JOIN dbfriday.dbo.tbl_users AS uu ON uu.id_user = p.id_user_update
             WHERE p.id_patient = CONVERT(INT, :id)"
         );
 
@@ -39,7 +39,7 @@ class ModelPatient
 
         // Preparamos la consulta
         $this->db->query(
-            "add_patient @name = :name,	@last_name = :last_name, @birthdate = :birthdate, @gender = :gender, 
+            "add_patient @name = :name,	@last_name = :last_name, @birthdate = :birthdate, @gender = :gender,
             @email = :email, @password = :password, @id_user = :id"
         );
 
@@ -61,6 +61,10 @@ class ModelPatient
         }
 
 
+    }
+
+    public function update_patient($patient){
+       // code...
     }
 }
 

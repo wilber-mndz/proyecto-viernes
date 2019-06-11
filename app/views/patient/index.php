@@ -69,5 +69,5 @@ if ($parameters['alert'] == 'saved') {
         confirmButtonText: 'Aceptar'
       })
     </script>";
-} 
+}
 ?>
