@@ -22,15 +22,16 @@
             <div class="picture">
                 <img src="img/viernes.png" alt="">
             </div>
+            <?php if ($parameters['login'] == 0):?>
             <div class="form-login">
                 <h3>Iniciar sesión</h3>
-                <form action="">
+                <form action="<?php echo ROUTE_URL?>/PatientPublic/login" method="post">
                     <div>
-                        <input type="email" placeholder="Ingrese su correo" name="correo">
+                        <input type="email" placeholder="Ingrese su correo" name="email" required>
                     </div>
                     <br>
                     <div>
-                        <input type="password" placeholder="Ingrese su contraseña" name="password">
+                        <input type="password" placeholder="Ingrese su contraseña" name="password" required>
                     </div>
                     <br>
                     <div>
@@ -39,24 +40,27 @@
                     <br>
                 </form>
             </div>
-            <div class="patient-info" style="display: none">
+            <?php endif;?>
+            <?php if ($parameters['login'] == 1):?>
+            <div class="patient-info">
                 <h3>BIENVENIDO</h3>
-                <b class="patient-name">Nombre de usuario</b>
+                <b class="patient-name"><?php echo $_SESSION['patient']->name . ' ' . $_SESSION['patient']->last_name?></b>
 
                 <div class="options">
-                    <a href="#"><i class="fas fa-id-card"></i> Ver perfil</a>
+                    <a href="<?php echo ROUTE_URL?>/PatientPublic"><i class="fas fa-id-card"></i> Ver perfil</a>
                     <a href="#"><i class="fas fa-file-alt"></i> Realizar test</a>
                     <br><br>
-                    <a href=""><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                    <a href="<?php echo ROUTE_URL?>/PatientPublic/logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
                 </div>
             </div>
+            <?php endif;?>
         </div>
         <div class="chat-title">
             <span>Viernes</span>
             <i class="fas fa-bars"></i>
         </div>
         <div class="chat-message-list" id="chat-message-list">
-
+            <?php echo $parameters['message'] ?>
         </div>
         <div class="chat-form">
             <input type="text" onkeypress="send_keyboard(event)" id="message-form" placeholder="Escribe un mensaje">

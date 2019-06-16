@@ -20,6 +20,13 @@
             }
     }
 
+    function sessionPatient(){
+        // session_start();
+            if (!isset($_SESSION['patient'])) {
+                redirect('/');
+            }
+    }
+
         // Para redireccionar la pagina
         function redirect($pagina){
             header('location:' . ROUTE_URL . $pagina);

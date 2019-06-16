@@ -220,6 +220,26 @@ BEGIN
 	VALUES(@id, CONVERT(INT, @id_user), @answer, getdate(), CONVERT(INT, @id_user), getdate())
 END
 
+-- Procedimiento para guardar una palabra clave
+CREATE OR REPLACE proc add_keyword
+	@id_answer INT,
+	@keyword VARCHAR(25)
+	
+AS
+BEGIN
+--	Declaramos variable para obtener el id anterior
+	DECLARE @id int
+	
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_keyword), 0) + 1
+	FROM dbfriday.dbo.tbl_keywords
+	
+-- guardamos los datos del usuario
+	INSERT INTO dbfriday.dbo.tbl_keywords
+	(id_keyword, id_answer, keyword)
+	VALUES(@id, @id_answer, @keyword)
+END
+
 -- Procedimiento para Actualizar Pacientes
 CREATE OR REPLACE proc update_patient
 @name VARCHAR(45),

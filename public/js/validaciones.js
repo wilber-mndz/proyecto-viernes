@@ -154,7 +154,7 @@
         formulario.addEventListener('submit', validarFormulario);
         //Mascara de Texto para usuario
       $(document).ready(function(){
-        $('#birthdate').mask('00-00-0000');
+        $('#birthdate').mask('0000-00-00',{placeholder: "YYYY-MM-DD"});
     });
 
   }
@@ -276,7 +276,7 @@
     formulario.addEventListener('submit', validarFormulario);
     //Mascara de Texto para usuario
   $(document).ready(function(){
-    $('#birthdate').mask('0000-00-00');
+    $('#birthdate').mask('0000-00-00',{placeholder: "YYYY-MM-DD"});
 });
 
   }
@@ -366,7 +366,7 @@
     formulario.addEventListener('submit', validarFormulario);
     //Mascara de Texto para usuario
   $(document).ready(function(){
-    $('#birthdate').mask('00-00-0000');
+    $('#birthdate').mask('0000-00-00',{placeholder: "YYYY-MM-DD"});
 });
 
   }
@@ -479,7 +479,7 @@
     formulario.addEventListener('submit', validarFormulario);
     //Mascara de Texto para usuario
   $(document).ready(function(){
-    $('#birthdate').mask('00-00-0000');
+    $('#birthdate').mask('0000-00-00',{placeholder: "YYYY-MM-DD"});
 });
 
   }
