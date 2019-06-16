@@ -36,6 +36,9 @@
                     <br>
                     <div>
                         <button class="btn btn-primary">Iniciar sesión</button>
+                        <br>
+                        <br>
+                        <a href="#">¿No tienes cuenta? Crea una.</a>
                     </div>
                     <br>
                 </form>
