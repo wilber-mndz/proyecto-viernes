@@ -102,6 +102,20 @@ class ModelPatient
           return false;
         }
     }
+
+    public function login($email, $password){
+        
+        $this->db->query(
+            "SELECT id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, id_user, insert_date, id_user_update, update_date
+            FROM dbfriday.dbo.tbl_patient WHERE email = :email AND password = :password"
+        );
+
+        $this->db->bind(":email", $email);
+        $this->db->bind(":password", $password);
+
+        return $this->db->register();
+        
+    }
 }
 
 

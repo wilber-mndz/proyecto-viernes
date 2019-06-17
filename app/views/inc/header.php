@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li class="<?php echo $var = ($parameters['menu'] == 'Viernes')? 'active' : '' ?>">
-                        <a href="#">
+                        <a href="<?php echo ROUTE_URL?>/friday">
                             <i class="fas fa-atom"></i>
                             <p>Viernes</p>
                         </a>

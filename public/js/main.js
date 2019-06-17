@@ -1,7 +1,11 @@
 // (function(){
     
     // Establecemos el tamaño de la ventana
-    
+    $(document).ready(function(){
+       sleep(1500); 
+       var first_mesagge = document.getElementById('first-message');
+       first_mesagge.style.display = "inline-block";
+    });
     // if (screen.width < 768) {
         var height = $(window).height();
         // var chat = document.getElementById("chat-container");
@@ -123,7 +127,6 @@
         }
 
         petition.send(message_send);
-
 
 
     }
