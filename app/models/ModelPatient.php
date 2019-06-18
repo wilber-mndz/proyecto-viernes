@@ -104,7 +104,7 @@ class ModelPatient
     }
 
     public function login($email, $password){
-        
+
         $this->db->query(
             "SELECT id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, id_user, insert_date, id_user_update, update_date
             FROM dbfriday.dbo.tbl_patient WHERE email = :email AND password = :password"
@@ -114,7 +114,34 @@ class ModelPatient
         $this->db->bind(":password", $password);
 
         return $this->db->register();
-        
+
+    }
+
+    public function new_acount($patient){
+
+        // Preparamos la consulta
+        $this->db->query(
+            "add_acount @name = :name,	@last_name = :last_name, @birthdate = :birthdate, @gender = :gender,
+            @email = :email, @password = :password"
+        );
+
+        // Vinculamos los datos
+        $this->db->bind(':name',$patient['name']);
+        $this->db->bind(':last_name',$patient['last_name']);
+        $this->db->bind(':birthdate',$patient['birthdate']);
+        $this->db->bind(':gender',$patient['gender']);
+        $this->db->bind(':email',$patient['email']);
+        $this->db->bind(':password',$patient['password']);
+
+        // Ejecutamos
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 }
 

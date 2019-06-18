@@ -267,20 +267,45 @@ END
 CREATE OR REPLACE proc add_keyword
 	@id_answer INT,
 	@keyword VARCHAR(25)
-	
+
 AS
 BEGIN
 --	Declaramos variable para obtener el id anterior
 	DECLARE @id int
-	
+
 --	Obtenemos el id anterior
 	SELECT @id = isNull(MAX(id_keyword), 0) + 1
 	FROM dbfriday.dbo.tbl_keywords
-	
+
 -- guardamos los datos del usuario
 	INSERT INTO dbfriday.dbo.tbl_keywords
 	(id_keyword, id_answer, keyword)
 	VALUES(@id, @id_answer, @keyword)
+END
+
+-- Procedimiento para guardar un nuevo paciente
+CREATE OR REPLACE proc add_patient
+	@name VARCHAR(45),
+	@last_name VARCHAR(45),
+	@birthdate DATE,
+	@gender VARCHAR(1),
+	@email VARCHAR(50),
+	@password VARCHAR(400),
+	@id_user INT
+AS
+BEGIN
+--	Declaramos variable para obtener el id anterior
+	DECLARE @id int
+
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_patient), 0) + 1
+	FROM dbfriday.dbo.tbl_patient
+
+-- guardamos los datos del paciente
+	INSERT INTO dbfriday.dbo.tbl_patient
+	(id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, password, id_user, insert_date, id_user_update, update_date)
+	VALUES(@id, @name, @last_name, @birthdate, CONVERT(INT, @gender), '', '', '', @email, @password, CONVERT(INT, @id_user), getdate(), CONVERT(INT, @id_user), getdate())
+
 END
 
 -- Procedimiento para Actualizar Pacientes
@@ -311,6 +336,30 @@ BEGIN
 	UPDATE dbfriday.dbo.tbl_patient
 	SET password=@password, id_user_update=@id_user, update_date=getdate()
 	WHERE id_patient=CONVERT(int, @id)
+END
+
+-- Procedimiento para guardar un nuevo paciente
+CREATE OR REPLACE proc add_acount
+	@name VARCHAR(45),
+	@last_name VARCHAR(45),
+	@birthdate DATE,
+	@gender VARCHAR(1),
+	@email VARCHAR(50),
+	@password VARCHAR(400)
+AS
+BEGIN
+--	Declaramos variable para obtener el id anterior
+	DECLARE @id int
+
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_patient), 0) + 1
+	FROM dbfriday.dbo.tbl_patient
+
+-- guardamos los datos del paciente
+	INSERT INTO dbfriday.dbo.tbl_patient
+	(id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, password, id_user, insert_date, id_user_update, update_date)
+	VALUES(@id, @name, @last_name, @birthdate, CONVERT(INT, @gender), '', '', '', @email, @password, 1, getdate(), 1, getdate())
+
 END
 
 -- TRIGGERS
