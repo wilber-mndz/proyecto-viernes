@@ -70,10 +70,10 @@
                                 <a href="<?php echo ROUTE_URL?>/" class="btn btn-primary btn-block">Ir al chat <i class="fas fa-comments"></i></a>
                             </div>
                             <div class="col-md-4">
-                                <a href="<?php echo ROUTE_URL?>/PatientPublic/update/<?php echo $_SESSION['patient']->id_patient?>" class="btn btn-success btn-block">Modificar <i class="fas fa-user-edit"></i> </a>
+                                <a href="<?php echo ROUTE_URL?>/PatientPublic/update_acount/<?php echo $_SESSION['patient']->id_patient?>" class="btn btn-success btn-block">Modificar <i class="fas fa-user-edit"></i> </a>
                             </div>
                             <div class="col-md-4">
-                                <a href="<?php echo ROUTE_URL?>/PatientPublic/change_password" class="btn btn-info btn-block">Cambiar contraseña <i class="fas fa-key"></i></a>
+                                <a href="<?php echo ROUTE_URL?>/PatientPublic/update_passwordAcount/<?php echo $_SESSION['patient']->id_patient?>" class="btn btn-info btn-block">Cambiar contraseña <i class="fas fa-key"></i></a>
                             </div>
                         </div>
 

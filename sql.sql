@@ -362,6 +362,34 @@ BEGIN
 
 END
 
+-- Procedimiento para que el paciente actualice sus datos.
+CREATE OR REPLACE proc update_acount
+@name VARCHAR(45),
+@last_name VARCHAR(45),
+@birthdate DATE,
+@gender VARCHAR(1),
+@email VARCHAR(50),
+@id VARCHAR(10)
+AS
+BEGIN
+-- guardamos los datos del Paciente
+UPDATE dbfriday.dbo.tbl_patient
+SET name=@name, last_name=@last_name, birthdate = @birthdate, gender=CONVERT(int, @gender), email=@email, id_user_update=1, update_date=getdate()
+WHERE id_patient=CONVERT(int, @id)
+END
+
+-- Procedimiento para que el paciente actualice su contraseña
+CREATE OR REPLACE proc update_passwordAcount
+	@password VARCHAR(400),
+	@id VARCHAR(10)
+AS
+BEGIN
+-- guardamos la contraseña del Paciente
+	UPDATE dbfriday.dbo.tbl_patient
+	SET password=@password, id_user_update=1, update_date=getdate()
+	WHERE id_patient=CONVERT(int, @id)
+END
+
 -- TRIGGERS
 -- -----------------------------------------------------------
 

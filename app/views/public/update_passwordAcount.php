@@ -40,7 +40,7 @@
                         <h4>Modificar Mis Contraseña</h4>
                         <div class="card-body">
                            <!-- Formulario nuevo usuario -->
-                           <form action="<?php echo ROUTE_URL?>/PatientPublic/change_password<?php //echo $_SESSION['patient']->id_user ?>" method="post"
+                           <form action="<?php echo ROUTE_URL?>/PatientPublic/update_passwordAcount/<?php echo $_SESSION['patient']->id_patient ?>" method="post"
                                 id="form-update">
                                 <div class="modal-body">
                                     <div class="row">
@@ -145,5 +145,22 @@
     <!-- Black Dashboard DEMO methods, don't include it in your project! -->
     <script src="<?php echo ROUTE_URL?>/assets/demo/demo.js"></script>
 </body>
-
+<footer>
+   <!-- Sweet alert -->
+   <script src="<?php echo ROUTE_URL?>/js/sweetalert.js"></script>
+</footer>
 </html>
+<?php
+// Alertas
+if ($parameters['alert'] == 'saved') {
+    echo
+    "<script>
+        Swal.fire({
+        title: 'Datos guardados',
+        text: 'Contraseña Actualizada exitosamente',
+        type: 'success',
+        confirmButtonText: 'Aceptar'
+      })
+    </script>";
+}
+?>
