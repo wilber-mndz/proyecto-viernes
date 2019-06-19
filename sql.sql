@@ -263,8 +263,6 @@ BEGIN
 	VALUES(@id, CONVERT(INT, @id_user), @answer, getdate(), CONVERT(INT, @id_user), getdate())
 END
 
-<<<<<<< HEAD
-=======
 -- Procedimiento para guardar una palabra clave
 CREATE OR REPLACE proc add_keyword
 	@id_answer INT,
@@ -310,7 +308,6 @@ BEGIN
 
 END
 
->>>>>>> 973de8728009a0718c25c0a7ba5b91cedd1dcc4b
 -- Procedimiento para Actualizar Pacientes
 CREATE OR REPLACE proc update_patient
 @name VARCHAR(45),
@@ -341,8 +338,6 @@ BEGIN
 	WHERE id_patient=CONVERT(int, @id)
 END
 
-<<<<<<< HEAD
-=======
 -- Procedimiento para guardar un nuevo paciente
 CREATE OR REPLACE proc add_acount
 	@name VARCHAR(45),
@@ -395,7 +390,6 @@ BEGIN
 	WHERE id_patient=CONVERT(int, @id)
 END
 
->>>>>>> 973de8728009a0718c25c0a7ba5b91cedd1dcc4b
 -- TRIGGERS
 -- -----------------------------------------------------------
 

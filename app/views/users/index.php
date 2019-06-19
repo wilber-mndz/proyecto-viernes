@@ -165,10 +165,6 @@
                             </div>
                         </div>
                     </div>
-<<<<<<< HEAD
-
-=======
->>>>>>> 973de8728009a0718c25c0a7ba5b91cedd1dcc4b
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger errors" style="display:none" id="errores"></div>

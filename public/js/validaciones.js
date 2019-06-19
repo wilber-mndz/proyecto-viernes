@@ -167,15 +167,6 @@
 
     var firs_name = formulario.first_name;
     var last_name = formulario.last_name;
-<<<<<<< HEAD
-    var gender = formulario.gender;
-    var email = formulario.email;
-    var birthdate = formulario.birthdate;
-    var user_type = formulario.user_type;
-    var password = formulario.password;
-    var password2 = formulario.password2;
-
-=======
     var gender = formulario.gender;
     var email = formulario.email;
     var birthdate = formulario.birthdate;
@@ -303,18 +294,13 @@
     var email = formulario.email;      
     var birthdate = formulario.birthdate;  
   
->>>>>>> 973de8728009a0718c25c0a7ba5b91cedd1dcc4b
     //Accedemos al contenedor de errores
     var errores = document.getElementById('errores');
 
     function validarFirst_name(e){
       if (firs_name.value == '' || firs_name.value == null) {
         errores.style.display = 'block';
-<<<<<<< HEAD
-        errores.innerHTML += '<p>Por favor Ingrese el nombre</p>';
-=======
         errores.innerHTML += '<p>Ingrese el nombre</p>'; 
->>>>>>> 973de8728009a0718c25c0a7ba5b91cedd1dcc4b
         e.preventDefault();
       }else if (firs_name.value.length > 50) {
         errores.style.display = 'block';
@@ -364,10 +350,6 @@
       }
     }
 
-<<<<<<< HEAD
-    function validarUserType(e){
-      if (user_type.value == '' || user_type.value == null) {
-=======
   
     function validarFormulario(e){
       //Limpiar contenedor
@@ -442,7 +424,6 @@
 
     function validarEmail(e){
       if (email.value == '' || email.value == null) {
->>>>>>> 973de8728009a0718c25c0a7ba5b91cedd1dcc4b
         errores.style.display = 'block';
         errores.innerHTML += '<p>Ingrese el correo</p>';
         e.preventDefault();
@@ -498,11 +479,7 @@
     formulario.addEventListener('submit', validarFormulario);
     //Mascara de Texto para usuario
   $(document).ready(function(){
-<<<<<<< HEAD
-    $('#birthdate').mask('0000-00-00');
-=======
     $('#birthdate').mask('0000-00-00',{placeholder: "YYYY-MM-DD"});
->>>>>>> 973de8728009a0718c25c0a7ba5b91cedd1dcc4b
 });
 
   }
