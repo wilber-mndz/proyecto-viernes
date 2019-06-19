@@ -40,6 +40,7 @@ class Login extends MainController{
             if ($user) {
                 // Si se obtuvo información iniciamos sesión y diseccionamos
                 $_SESSION['user'] = $user;
+                $_SESSION['friday']['learning'] = 0;
                 redirect('/admin');
             }else{
                 // Si los datos no coinciden con la base de datos generamos un error

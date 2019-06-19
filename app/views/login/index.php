@@ -2,104 +2,104 @@
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-    <title>
-        Proyecto Viernes <?php echo $var = (isset($parameters['title']))? ' - '.$parameters['title'] : ''?>
-    </title>
-    <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-    <link rel="stylesheet" href="<?php echo ROUTE_URL?>/fa/css/all.min.css">
-    <!-- Nucleo Icons -->
-    <link href="<?php echo ROUTE_URL?>/assets/css/nucleo-icons.css" rel="stylesheet" />
-    <!-- CSS Files -->
-    <link href="<?php echo ROUTE_URL?>/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
-    <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link href="<?php echo ROUTE_URL?>/assets/demo/demo.css" rel="stylesheet" />
-    <!-- Mis estilos css -->
-    <link href="<?php echo ROUTE_URL?>/css/d_styles.css" rel="stylesheet" />
-
+    <title>Iniciar sesión</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="<?php echo ROUTE_URL?>/assets/login/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="<?php echo ROUTE_URL?>/assets/login/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="<?php echo ROUTE_URL?>/assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="<?php echo ROUTE_URL?>/assets/login/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo ROUTE_URL?>/assets/login/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="<?php echo ROUTE_URL?>/assets/login/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="<?php echo ROUTE_URL?>/assets/login/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo ROUTE_URL?>/assets/login/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css"
+        href="<?php echo ROUTE_URL?>/assets/login/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="<?php echo ROUTE_URL?>/assets/login/css/util.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo ROUTE_URL?>/assets/login/css/main.css">
+    <!--===============================================================================================-->
 </head>
 
-<body class="white-content">
+<body>
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-5">
-                <div class="card login">
-                    <div class="card-header text-center">
-                        <h2 class="title">Iniciar sesión</h2>
+    <div class="limiter">
+        <div class="container-login100" style="background-image: url('<?php echo ROUTE_URL?>/img/bg-01.jpg');">
+            <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                <form action="<?php echo ROUTE_URL?>/login" method='POST' id="login"
+                    class="login100-form validate-form">
+                    <span class="login100-form-title p-b-49">
+                        Iniciar sesión
+                    </span>
+
+                    <div class="wrap-input100 validate-input m-b-23" data-validate="Ingrese correo electrónico">
+                        <span class="label-input100">Correo</span>
+                        <input class="input100" type="email" name="email" placeholder="Ingrese su correo">
+                        <span class="focus-input100" data-symbol="&#xf206;"></span>
                     </div>
-                    <form action="<?php echo ROUTE_URL?>/login" method = 'POST'>
-                    <div class="card-body">
-                        
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                    </div>
-                                    <input type="email" class="form-control" name="email" placeholder="Ingrese su correo" required>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-10">
-                                <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <div class="input-group-text">
-                                            <i class="fas fa-key"></i>
-                                        </div>
-                                    </div>
-                                    <input type="password" class="form-control" name="password" placeholder="Ingrese su contraseña" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $parameters['errors'] != ''):?>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="alert alert-danger">
-                                    <?php echo $parameters['errors']?>
-                                </div>
-                            </div>
-                        </div>
-                        <?php endif;?>
-
+                    <div class="wrap-input100 validate-input" data-validate="Ingrese contraseña">
+                        <span class="label-input100">Contraseña</span>
+                        <input class="input100" type="password" name="password" placeholder="Ingrese su contraseña">
+                        <span class="focus-input100" data-symbol="&#xf190;"></span>
                     </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-info">Iniciar sesión</button>
+                    <br>
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button class="login100-form-btn">
+                                Iniciar sesión
+                            </button>
+                        </div>
                     </div>
-                    </form>
+
+                </form>
+                <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && $parameters['errors'] != ''):?>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger">
+                            <?php echo $parameters['errors']?>
+                        </div>
+                    </div>
                 </div>
-
+                <?php endif;?>
             </div>
         </div>
     </div>
 
-    <!--   Core JS Files   -->
-    <script src="<?php echo ROUTE_URL?>/assets/js/core/jquery.min.js"></script>
-    <script src="<?php echo ROUTE_URL?>/assets/js/core/popper.min.js"></script>
-    <script src="<?php echo ROUTE_URL?>/assets/js/core/bootstrap.min.js"></script>
-    <script src="<?php echo ROUTE_URL?>/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-    <!--  Google Maps Plugin    -->
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-    <!-- Chart JS -->
-    <script src="<?php echo ROUTE_URL?>/assets/js/plugins/chartjs.min.js"></script>
-    <!--  Notifications Plugin    -->
-    <script src="<?php echo ROUTE_URL?>/assets/js/plugins/bootstrap-notify.js"></script>
-    <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="<?php echo ROUTE_URL?>/assets/js/black-dashboard.min.js?v=1.0.0"></script>
-    <!-- Black Dashboard DEMO methods, don't include it in your project! -->
-    <script src="<?php echo ROUTE_URL?>/assets/demo/demo.js"></script>
-    <!-- Sweet alert -->
-    <script src="<?php echo ROUTE_URL?>/js/sweetalert.js"></script>
-</body>
 
-</html>
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/bootstrap/js/popper.js"></script>
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/daterangepicker/moment.min.js"></script>
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="<?php echo ROUTE_URL?>/assets/login/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="<?php echo ROUTE_URL?>/assets/login/js/main.js"></script>
+
+</body>

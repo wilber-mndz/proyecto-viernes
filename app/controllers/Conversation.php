@@ -1,6 +1,11 @@
 <?php
 class Conversation extends MainController
 {
+    public function __construct(){
+        session_start();
+
+        $this->Modelfriday = $this->model('ModelFriday');
+    }
 
     /**
      * Función Index
@@ -16,41 +21,83 @@ class Conversation extends MainController
      * @author Wilber Méndez
      */
     public function index(){
-        error_reporting(0);
+        // error_reporting(0);  
         header('Content-type: application/json; charset=utf-8');
-        // if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        
+        
+        // Limpiamos y pasamos a mayúsculas la cadena enviada por el usuario
+        $message = strtoupper(filter_var(trim($_POST['message'], 'FILTER_SANITIZE_STRING')));
+        
+        // Activar aprendizaje, SOLO PARA ADMINISTRADORES
+        if(isset($_SESSION['user']->user_type) && $_SESSION['user']->user_type == 2 && $message == 'ACTIVAR MODO APRENDIZAJE'){
+            
+            $_SESSION['friday']['learning'] = 1;
+            echo "Modo de aprendizaje activado. Dime algo y luego enseñame como responder"; 
 
-            // Limpiamos y pasamos a mayúsculas la cadena enviada por el usuario
-            $menssage = strtoupper(filter_var(trim($_POST['message'], 'FILTER_SANITIZE_STRING')));
+        }else if(isset($_SESSION['friday']['learning']) && $_SESSION['friday']['learning'] == 1){
+            
+            if(!isset($_SESSION['friday']['keywords'])){
+                $_SESSION['friday']['keywords'] = $message;
+                echo "Que debería responder cuando se me diga " .'"'.$message.'"';
 
+            }else if(isset($_SESSION['friday']['answer']) && $message == 'SI'){
+                $keywords = explode(' ', $_SESSION['friday']['keywords']);
+                echo "¿Desea guardar?";
+                $_SESSION['friday']['learning'] = 2;
+            }else if(isset($_SESSION['friday']['answer']) && $message == 'NO'){
+                echo "Que debería responder cuando se me diga " .'"'.$_SESSION['friday']['keywords'].'"';
+            }else{
+
+                $_SESSION['friday']['answer'] = strtolower($message);
+                echo "Entiendo que debería responder " .'"'.$_SESSION['friday']['answer'].'"';
+            }
+        // Confirmar que se decea guardar la información  
+        }else if ( isset($_SESSION['friday']['learning']) && $_SESSION['friday']['learning'] == 2 && $message == 'SI') {
+            
+            // Guardamos la información
+            if ($this->Modelfriday->add_answer( $_SESSION['friday']['answer'], $_SESSION['user']->id_user) ) {
+                echo "Nueva información guardada";
+                unset($_SESSION['friday']['keywords']);
+                unset($_SESSION['friday']['answer']);
+                $_SESSION['friday']['learning'] == 0;
+            }else{
+                echo 'Parece que algo salio mal';
+            }
+            
+
+
+        } else if (isset($_SESSION['friday']['learning']) && $_SESSION['friday']['learning'] == 2 && $message != 'SI'){
+            echo "Acción cancelada";
+            $_SESSION['friday']['learning'] == 0;
+        }else{
             // Dividimos la cadena por palabra y almacenamos en un array
-            $keywords = explode(' ', $menssage);
-
+            $keywords = explode(' ', $message);
+    
             // Creamos nuestra consulta
             $query = "SELECT TOP 1 a.answer, k.id_answer, (COUNT(k.id_answer)) AS N 
             FROM dbfriday.dbo.tbl_keywords AS k
             INNER JOIN dbfriday.dbo.tbl_answers AS a
             ON k.id_answer = a.id_answer
             WHERE";
-
+    
             foreach ($keywords as $key => $word) {
                 $query .= " keyword LIKE '$word' OR";
             }
-
+    
             // Eliminamos el ultimo " OR" que nos agrega el foreach
             $query = substr($query, 0, -3);
             
             $query .= "
             GROUP BY a.id_answer
             ORDER BY N DESC";
-
+    
             // echo $query;
-
+    
             $db = new Sql;
-
+    
             $db->query($query);
             $answer = $db->register();
-
+    
             if ($answer) {
                 # code...
                 // Retornamos la respuesta codificada en utf8
@@ -59,10 +106,7 @@ class Conversation extends MainController
                 echo utf8_encode('Aun no tengo respuesta para eso');
             }
 
-
-        // }else{
-        //     redirect('/');
-        // }
+        }
     }
     
 }
