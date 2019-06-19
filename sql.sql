@@ -123,6 +123,7 @@ INSERT INTO dbfriday.dbo.tbl_patient (id_patient, name, last_name, birthdate, ge
 INSERT INTO dbfriday.dbo.tbl_patient (id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, password, id_user, insert_date, id_user_update, update_date) VALUES(3, 'Yolani', 'Rodriguez', '2001-05-04', 2, '', '', '', 'maribel@gmail.com', '471d4fb1dd176cfe225eb45977a9c7fa5db9ace8b7fb21588b79de3f4449c359e096c60eedaa7174291090ceac04b32d393a7ce6991b87c4a7ad1347097b15be', 1, '2019-06-08 17:39:54.167', 1, '2019-06-08 17:39:54.167');
 
 -- Insertar respuestas
+<<<<<<< HEAD
 INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, n_keywords, insert_date, id_user_update, update_date) VALUES(1, 1, 'Hola, ¿Como puedo ayudarte?', 1, '2019-06-02 17:50:21.133', 3, '2019-06-02 17:51:58.000')
 INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, n_keywords, insert_date, id_user_update, update_date) VALUES(2, 1, 'Puedo ayudarte a encontrar la solución a tus problemas mediante una terapia de escucha activa, habla conmigo, puedo ayudarte a sentirte mejor.', 3, '2019-06-05 08:46:39.000', 1, '2019-06-05 08:46:39.000')
 INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, n_keywords, insert_date, id_user_update, update_date) VALUES(3, 1, 'También puedo aplicarte algunos test como de personalidad, carácter o medir tu coeficiente intelectual mediante una prueba.', 4, '2019-06-05 08:52:40.000', 1, '2019-06-05 08:52:40.000')
@@ -158,6 +159,43 @@ INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(24
 INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(25, 7, 'CIELO')
 INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(26, 7, 'ES')
 INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(27, 7, 'AZUL')
+=======
+INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, insert_date, id_user_update, update_date) VALUES(1, 1, 'Hola, ¿Como puedo ayudarte?', '2019-06-02 17:50:21.133', 3, '2019-06-02 17:51:58.000');
+INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, insert_date, id_user_update, update_date) VALUES(2, 1, 'Puedo ayudarte a encontrar la solución a tus problemas mediante una terapia de escucha activa, habla conmigo, puedo ayudarte a sentirte mejor.', '2019-06-05 08:46:39.000', 1, '2019-06-05 08:46:39.000');
+INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, insert_date, id_user_update, update_date) VALUES(3, 1, 'También puedo aplicarte algunos test como de personalidad, carácter o medir tu coeficiente intelectual mediante una prueba.', '2019-06-05 08:52:40.000', 1, '2019-06-05 08:52:40.000');
+INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, insert_date, id_user_update, update_date) VALUES(4, 1, 'Aun estoy en desarrollo por lo cual no tengo un nombre definido, pero puedes llamarme "Viernes".', '2019-06-08 09:25:15.000', 1, '2019-06-08 09:25:30.000');
+INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, insert_date, id_user_update, update_date) VALUES(5, 1, 'Muy bien ¿y tu?', '2019-06-08 09:53:01.000', 1, '2019-06-08 09:53:16.000');
+INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, insert_date, id_user_update, update_date) VALUES(6, 1, 'Me alegro de que estes bien.', '2019-06-08 09:53:51.000', 1, '2019-06-08 09:54:06.000');
+INSERT INTO dbfriday.dbo.tbl_answers (id_answer, id_user, answer, insert_date, id_user_update, update_date) VALUES(7, 1, 'por la distorcion de la luz en la admosfera terrestre.', '2019-06-15 16:38:52.757', 1, '2019-06-15 16:38:52.757');
+
+-- Insertar palabras clave
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(1, 1, 'HOLA');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(2, 2, 'QUE');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(3, 2, 'PUEDES');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(4, 2, 'HACER');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(5, 3, 'QUE');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(6, 3, 'MAS');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(8, 3, 'HACER');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(9, 3, 'OTRAS');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(10, 3, 'COSAS');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(11, 4, 'COMO');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(12, 4, 'TE');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(13, 4, 'LLAMAS');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(14, 4, 'CUAL');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(15, 4, 'ES');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(16, 4, 'TU');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(17, 4, 'NOMBRE');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(18, 5, 'COMO');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(19, 5, 'ESTAS');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(20, 6, 'MUY');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(21, 6, 'BIEN');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(22, 6, 'TAMBIEN');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(23, 7, 'PORQUE');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(24, 7, 'EL');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(25, 7, 'CIELO');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(26, 7, 'ES');
+INSERT INTO dbfriday.dbo.tbl_keywords (id_keyword, id_answer, keyword) VALUES(27, 7, 'AZUL');
+>>>>>>> cederh-master
 
 
 
@@ -268,22 +306,62 @@ END
 CREATE OR REPLACE proc add_keyword
 	@id_answer INT,
 	@keyword VARCHAR(25)
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> cederh-master
 AS
 BEGIN
 --	Declaramos variable para obtener el id anterior
 	DECLARE @id int
+<<<<<<< HEAD
 	
 --	Obtenemos el id anterior
 	SELECT @id = isNull(MAX(id_keyword), 0) + 1
 	FROM dbfriday.dbo.tbl_keywords
 	
+=======
+
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_keyword), 0) + 1
+	FROM dbfriday.dbo.tbl_keywords
+
+>>>>>>> cederh-master
 -- guardamos los datos del usuario
 	INSERT INTO dbfriday.dbo.tbl_keywords
 	(id_keyword, id_answer, keyword)
 	VALUES(@id, @id_answer, @keyword)
 END
 
+<<<<<<< HEAD
+=======
+-- Procedimiento para guardar un nuevo paciente
+CREATE OR REPLACE proc add_patient
+	@name VARCHAR(45),
+	@last_name VARCHAR(45),
+	@birthdate DATE,
+	@gender VARCHAR(1),
+	@email VARCHAR(50),
+	@password VARCHAR(400),
+	@id_user INT
+AS
+BEGIN
+--	Declaramos variable para obtener el id anterior
+	DECLARE @id int
+
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_patient), 0) + 1
+	FROM dbfriday.dbo.tbl_patient
+
+-- guardamos los datos del paciente
+	INSERT INTO dbfriday.dbo.tbl_patient
+	(id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, password, id_user, insert_date, id_user_update, update_date)
+	VALUES(@id, @name, @last_name, @birthdate, CONVERT(INT, @gender), '', '', '', @email, @password, CONVERT(INT, @id_user), getdate(), CONVERT(INT, @id_user), getdate())
+
+END
+
+>>>>>>> cederh-master
 -- Procedimiento para Actualizar Pacientes
 CREATE OR REPLACE proc update_patient
 @name VARCHAR(45),
@@ -311,6 +389,58 @@ BEGIN
 -- guardamos la contraseña del Paciente
 	UPDATE dbfriday.dbo.tbl_patient
 	SET password=@password, id_user_update=@id_user, update_date=getdate()
+	WHERE id_patient=CONVERT(int, @id)
+END
+
+-- Procedimiento para guardar un nuevo paciente
+CREATE OR REPLACE proc add_acount
+	@name VARCHAR(45),
+	@last_name VARCHAR(45),
+	@birthdate DATE,
+	@gender VARCHAR(1),
+	@email VARCHAR(50),
+	@password VARCHAR(400)
+AS
+BEGIN
+--	Declaramos variable para obtener el id anterior
+	DECLARE @id int
+
+--	Obtenemos el id anterior
+	SELECT @id = isNull(MAX(id_patient), 0) + 1
+	FROM dbfriday.dbo.tbl_patient
+
+-- guardamos los datos del paciente
+	INSERT INTO dbfriday.dbo.tbl_patient
+	(id_patient, name, last_name, birthdate, gender, personality, ci, [character], email, password, id_user, insert_date, id_user_update, update_date)
+	VALUES(@id, @name, @last_name, @birthdate, CONVERT(INT, @gender), '', '', '', @email, @password, 1, getdate(), 1, getdate())
+
+END
+
+-- Procedimiento para que el paciente actualice sus datos.
+CREATE OR REPLACE proc update_acount
+@name VARCHAR(45),
+@last_name VARCHAR(45),
+@birthdate DATE,
+@gender VARCHAR(1),
+@email VARCHAR(50),
+@id VARCHAR(10)
+AS
+BEGIN
+-- guardamos los datos del Paciente
+UPDATE dbfriday.dbo.tbl_patient
+SET name=@name, last_name=@last_name, birthdate = @birthdate, gender=CONVERT(int, @gender), email=@email, id_user_update=1, update_date=getdate()
+WHERE id_patient=CONVERT(int, @id)
+END
+
+-- Procedimiento para que el paciente actualice su contraseña
+CREATE OR REPLACE proc update_passwordAcount
+	@password VARCHAR(400),
+	@id VARCHAR(10)
+AS
+BEGIN
+-- guardamos la contraseña del Paciente
+	UPDATE dbfriday.dbo.tbl_patient
+	SET password=@password, id_user_update=1, update_date=getdate()
 	WHERE id_patient=CONVERT(int, @id)
 END
 

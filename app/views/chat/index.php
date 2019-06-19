@@ -38,7 +38,7 @@
                         <button class="btn btn-primary">Iniciar sesión</button>
                         <br>
                         <br>
-                        <a href="#">¿No tienes cuenta? Crea una.</a>
+                        <a href="<?php echo ROUTE_URL?>/PatientPublic/new_acount/">¿No tienes cuenta? Crea una.</a>
                     </div>
                     <br>
                 </form>
@@ -76,5 +76,4 @@
     <script src="js/utf8.js"></script>
     <script src="js/main.js"></script>
 </body>
-
 </html>

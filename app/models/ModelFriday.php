@@ -21,12 +21,20 @@ class ModelFriday
 
     }
 
+<<<<<<< HEAD
     public function add_answer($answer, $id, $n_keywords){
         $this->db->query("add_answer @id_user = :id, @answer = :answer, @n_keywords = :n_keywords");
 
         $this->db->bind(':id', $id);
         $this->db->bind(':answer', $answer);
         $this->db->bind(':n_keywords', $n_keywords);
+=======
+    public function add_answer($answer, $id){
+        $this->db->query("add_answer @id_user = :id, @answer = :answer");
+
+        $this->db->bind(':id', $id);
+        $this->db->bind(':answer', $answer);
+>>>>>>> cederh-master
 
         if ($this->db->execute()) {
             return true;
@@ -61,6 +69,7 @@ class ModelFriday
         }
     }
 
+<<<<<<< HEAD
     public function add_other_keyword($keyword, $id_answer, $id_user){
 
         $this->db->query(
@@ -105,14 +114,20 @@ class ModelFriday
         }
     }
 
+=======
+>>>>>>> cederh-master
     public function get_entry_info($id){
 
         // Preparamos la consulta
 
         $this->db->query(
             "SELECT a.answer, (ui.name + ' ' + ui.last_name) AS user_insert, 
+<<<<<<< HEAD
             (uu.name + ' ' + uu.last_name) AS user_update, k.keyword, k.id_keyword,
             a.insert_date, a.update_date
+=======
+            (uu.name + ' ' + uu.last_name), k.keyword, k.id_keyword
+>>>>>>> cederh-master
             FROM dbfriday.dbo.tbl_answers AS a
             INNER JOIN dbfriday.dbo.tbl_users AS ui ON ui.id_user = a.id_user
             INNER JOIN dbfriday.dbo.tbl_users AS uu ON uu.id_user = a.id_user_update
