@@ -34,12 +34,8 @@ class Friday extends MainController{
 
         $parameters = [
             'menu' => 'Viernes',
-<<<<<<< HEAD
             'answers' => $table_answer,
             'alert' => $alert
-=======
-            'answers' => $table_answer
->>>>>>> cederh-master
         ];
 
         $this->view('friday/index', $parameters);
@@ -56,11 +52,7 @@ class Friday extends MainController{
             $keywords = explode(" ", strtoupper($entry['message']));
 
             // Guardamos la respuesta
-<<<<<<< HEAD
             if($this->ModelFriday->add_answer($entry['answer'], $_SESSION['user']->id_user, count($keywords))){
-=======
-            if($this->ModelFriday->add_answer($entry['answer'], $_SESSION['user']->id_user)){
->>>>>>> cederh-master
 
                 // Obtenemos el id de la respuesta recién ingresada
                 $id_answer = $this->ModelFriday->last_id();
@@ -71,11 +63,8 @@ class Friday extends MainController{
                         die('Algo salio mal');
                     }
                 }
-<<<<<<< HEAD
 
                 redirect('/friday/saved');
-=======
->>>>>>> cederh-master
             }
         }
 
@@ -86,7 +75,6 @@ class Friday extends MainController{
         $this->view('friday/add', $parameters);
     }
 
-<<<<<<< HEAD
     public function update($id, $alert = ''){
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_keyword'])) {
@@ -113,12 +101,6 @@ class Friday extends MainController{
             redirect('/friday');
         }
 
-=======
-    public function update($id){
-
-        $entry = $this->ModelFriday->get_entry_info($id);
-
->>>>>>> cederh-master
         $keywords = [];
         foreach ($entry as $key => $keyword) {
 
@@ -130,18 +112,13 @@ class Friday extends MainController{
         $parameters = [
             "menu" => 'Viernes',
             "keywords" => $keywords,
-<<<<<<< HEAD
             "entry" => $entry,
             "id" => $id,
             "alert" => $alert
-=======
-            "entry" => $entry
->>>>>>> cederh-master
         ];
 
         $this->view('friday/update', $parameters);
     }
-<<<<<<< HEAD
 
     public function delete_keyword($keyword_id, $id_answer){
 
@@ -152,8 +129,6 @@ class Friday extends MainController{
         }
 
     }
-=======
->>>>>>> cederh-master
 }
 
 ?>

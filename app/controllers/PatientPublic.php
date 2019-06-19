@@ -3,26 +3,13 @@ class PatientPublic extends MainController
 {
     public function __construct(){
         session_start();
-<<<<<<< HEAD
-        
-=======
-
->>>>>>> cederh-master
         $this->ModelPatient = $this->model("ModelPatient");
     }
 
     public function index(){
         // Verificaos que el paciente haya iniciado sesión
-<<<<<<< HEAD
-        
         sessionPatient();
 
-
-
-=======
-        sessionPatient();
-
->>>>>>> cederh-master
         $this->view("public/index");
     }
 
@@ -51,12 +38,6 @@ class PatientPublic extends MainController
         // Redireccionamos
         redirect('/');
     }
-<<<<<<< HEAD
-}
-
-
-?>
-=======
 
     public function new_acount($alert = '')
     {
@@ -130,4 +111,3 @@ class PatientPublic extends MainController
 
 
 ?>
->>>>>>> cederh-master
