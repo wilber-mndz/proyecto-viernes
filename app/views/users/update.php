@@ -79,6 +79,12 @@
                 </div>
             </div>
             <input type="submit" class="btn btn-info" name="guardar" value="Guardar">
+            <!-- llamar las validaciones js -->
+            <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger errors" style="display:none" id="errores"></div>
+                        </div>
+                    </div>
             </form>
         </form>
     </div>

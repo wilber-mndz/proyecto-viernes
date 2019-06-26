@@ -114,7 +114,15 @@
                                 </div>
                             </div>
                             <br>
-                            <button type="submit" class="btn btn-info">Guardar</button>
+                  
+                           <button type="submit" class="btn btn-info">Guardar</button> 
+                                        <!-- llamar las validaciones js -->
+                     <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger errors" style="display:none" id="errores"></div>
+                        </div>
+                    </div>
+                            
                         </form>
                     </div>
                 </div>
@@ -142,6 +150,7 @@
     <script src="<?php echo ROUTE_URL?>/assets/demo/demo.js"></script>
 </body>
 <footer>
+<script src="<?php echo ROUTE_URL?>/js/validaciones.js"></script>
    <!-- Sweet alert -->
    <script src="<?php echo ROUTE_URL?>/js/sweetalert.js"></script>
 </footer>

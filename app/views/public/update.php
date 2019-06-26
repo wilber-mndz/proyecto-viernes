@@ -41,7 +41,7 @@
                         <div class="card-body">
                            <!-- Formulario nuevo usuario -->
                            <form action="<?php echo ROUTE_URL?>/PatientPublic/update_acount/<?php echo $_SESSION['patient']->id_patient ?>" method="post"
-                                id="form-update">
+                                id="form-updatepublic">
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -101,6 +101,13 @@
                                     </div>
                                 </div>
                                 <input type="submit"  class="btn btn-info" name="guardar" value="Guardar">
+
+                                <!-- llamar las validaciones js -->
+            <div class="row">
+                        <div class="col-md-12">
+                            <div class="alert alert-danger errors" style="display:none" id="errores"></div>
+                        </div>
+                    </div>
                                 </form>
                            </form>
                         </div>
@@ -113,6 +120,7 @@
 
 
     <!--   Core JS Files   -->
+
     <script src="<?php echo ROUTE_URL?>/assets/js/core/jquery.min.js"></script>
     <script src="<?php echo ROUTE_URL?>/assets/js/core/popper.min.js"></script>
     <script src="<?php echo ROUTE_URL?>/assets/js/core/bootstrap.min.js"></script>
@@ -131,6 +139,8 @@
 </body>
 <footer>
    <!-- Sweet alert -->
+       <!-- validaciones  -->
+       <script src="<?php echo ROUTE_URL?>/js/validaciones.js"></script>
    <script src="<?php echo ROUTE_URL?>/js/sweetalert.js"></script>
 </footer>
 </html>
