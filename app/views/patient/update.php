@@ -7,7 +7,7 @@
             Regresar</a>
     </div>
     <div class="card-body">
-        <form action="<?php echo ROUTE_URL?>/patient/update/<?php echo $parameters['patient']->id_patient ?>" method="post">
+        <form action="<?php echo ROUTE_URL?>/patient/update/<?php echo $parameters['patient']->id_patient ?>" method="post" id="form-update_patient">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -61,7 +61,14 @@
             </div>
             <br>
             <button type="submit" class="btn btn-info">Guardar</button>
+                 <!-- llama los errores de las validaciones de js -->
+              <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-danger errores" id="errores" style="display:none">
 
+                </div>
+                </div>
+                </div>
         </form>
     </div>
     <div class="card-footer">

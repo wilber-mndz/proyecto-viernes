@@ -7,7 +7,7 @@
             Regresar</a>
     </div>
     <div class="card-body">
-        <form action="<?php echo ROUTE_URL?>/patient/change_password/<?php echo $parameters['patient']->id_patient ?>" method="post">
+        <form action="<?php echo ROUTE_URL?>/patient/change_password/<?php echo $parameters['patient']->id_patient ?>" method="post" id="form-patient_password">
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -78,6 +78,14 @@
             <br>
             <button type="submit" class="btn btn-info">Guardar</button>
 
+                 <!-- llama los errores de las validaciones de js -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-danger errores" id="errores" style="display:none">
+
+                </div>
+                </div>
+                </div>
         </form>
     </div>
     <div class="card-footer">
