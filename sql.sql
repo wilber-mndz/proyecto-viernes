@@ -30,7 +30,7 @@ CREATE TABLE dbfriday.dbo.tbl_users (
 	user_type int NOT NULL,
 	status int NOT NULL,
 	CONSTRAINT tbl_users_PK PRIMARY KEY (id_user)
-)
+) go
 
 -- Tabla respuestas
 CREATE TABLE dbfriday.dbo.tbl_answers (
@@ -43,7 +43,7 @@ CREATE TABLE dbfriday.dbo.tbl_answers (
 	update_date datetime,
 	CONSTRAINT tbl_answers_PK PRIMARY KEY (id_answer),
 	CONSTRAINT tbl_answers_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user)
-)
+) go
 
 -- Tabla palabras claves
 CREATE TABLE dbfriday.dbo.tbl_keywords (
@@ -52,7 +52,7 @@ CREATE TABLE dbfriday.dbo.tbl_keywords (
 	keyword varchar(25) NOT NULL,
 	CONSTRAINT tbl_keywords_PK PRIMARY KEY (id_keyword),
 	CONSTRAINT tbl_keywords_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
-)
+) go
 -- Tabla pacientes
 CREATE TABLE dbfriday.dbo.tbl_patient (
 	id_patient int NOT NULL,
@@ -71,7 +71,7 @@ CREATE TABLE dbfriday.dbo.tbl_patient (
 	update_date datetime,
 	CONSTRAINT tbl_patient_PK PRIMARY KEY (id_patient),
 	CONSTRAINT tbl_patient_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user)
-)
+) go
 
 -- Tabla historial
 CREATE TABLE dbfriday.dbo.tbl_chat_history (
@@ -83,7 +83,7 @@ CREATE TABLE dbfriday.dbo.tbl_chat_history (
 	CONSTRAINT tbl_chat_history_PK PRIMARY KEY (id_chat_history),
 	CONSTRAINT tbl_chat_history_tbl_patient_FK FOREIGN KEY (id_patient) REFERENCES dbfriday.dbo.tbl_patient(id_patient),
 	CONSTRAINT tbl_chat_history_tbl_answers_FK FOREIGN KEY (id_answer) REFERENCES dbfriday.dbo.tbl_answers(id_answer)
-)
+) go
 
 -- Tabla para almacenar preguntas para los test
 CREATE TABLE dbfriday.dbo.id_tests_questions (
@@ -97,7 +97,7 @@ CREATE TABLE dbfriday.dbo.id_tests_questions (
 	update_date datetime,
 	CONSTRAINT id_tests_questions_PK PRIMARY KEY (id_questions),
 	CONSTRAINT id_tests_questions_FK FOREIGN KEY (id_user) REFERENCES dbfriday.dbo.tbl_users(id_user)
-)
+) go
 
 
 -- Tabla bitacora
@@ -108,7 +108,7 @@ CREATE TABLE dbfriday.dbo.tbl_binnacle (
 	new_data varchar(1000) NOT NULL,
 	old_data varchar(1000) NOT NULL,
 	dt datetime NOT NULL
-)
+) go
 
 -- Creacion de procedimientos
 -- -------------------------------------------------------------

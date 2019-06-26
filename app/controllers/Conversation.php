@@ -130,17 +130,14 @@ class Conversation extends MainController
                     }
 
             } else {
-                if ($keywords[0] == 'SOY') {
-                    $answer = '';
-                    foreach ($keywords as $key => $word) {
-                        if ($key != 0) {
-                            $answer .= ' ' . strtolower($word) . '';
-                        }
-                    }
-    
-                    echo '¿Porque crees que eres ' . $answer . '?';
+                // Funciones para preguntas
+                if ($this->because_you_think($message)) {    
+                }else if($this->my_something($message)){
+                }else if($this->my_something_2($message)){
+                }else if($this->i_feel($message)){
+                }else if($this->i_have($message)){
                 }else {
-                    echo 'Hablame de tus problemas';
+                    echo 'Hablame mas de tus problemas';
                 }
 
             }
@@ -176,6 +173,63 @@ class Conversation extends MainController
 
         echo $chat_message_list;
         
+    }
+
+    public function because_you_think($message){
+        // echo strpos($message, 'SOY' );
+        if( strpos($message, 'SOY ' ) === false ){
+            return false;
+        }else{
+            $answer = explode('SOY ', $message);
+
+            echo '¿Porque crees que eres '. strtolower($answer[1]).'?';
+            return true;
+        }
+
+    }
+
+    public function my_something($message){
+        if( strpos($message, 'MI ' ) === false ){
+            return false;
+        }else{
+            $answer = explode('MI ', $message);
+
+            echo '¿Que pasa con tu '. strtolower($answer[1]).'?';
+            return true;
+        }
+    }
+
+    public function my_something_2($message){
+        if( strpos($message, 'MIS ' ) === false ){
+            return false;
+        }else{
+            $answer = explode('MIS ', $message);
+
+            echo '¿Que pasa con tus '. strtolower($answer[1]).'?';
+            return true;
+        }
+    }
+
+    public function i_feel($message){
+        if( strpos($message, 'ME SIENTO ' ) === false ){
+            return false;
+        }else{
+            $answer = explode('ME SIENTO ', $message);
+
+            echo '¿Que te hace sentir '. strtolower($answer[1]).'?';
+            return true;
+        }
+    }
+
+    public function i_have($message){
+        if( strpos($message, 'TENGO ' ) === false ){
+            return false;
+        }else{
+            $answer = explode('TENGO ', $message);
+
+            echo '¿Desde cuando tienes '. strtolower($answer[1]).'?';
+            return true;
+        }
     }
     
 }
