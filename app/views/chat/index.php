@@ -38,7 +38,7 @@
                         <button class="btn btn-primary">Iniciar sesión</button>
                         <br>
                         <br>
-                        <a href="#">¿No tienes cuenta? Crea una.</a>
+                        <a href="<?php echo ROUTE_URL?>/PatientPublic/new_acount/">¿No tienes cuenta? Crea una.</a>
                     </div>
                     <br>
                 </form>
@@ -57,12 +57,32 @@
                 </div>
             </div>
             <?php endif;?>
+            <?php if ($parameters['login'] == 2):?>
+            <div class="patient-info">
+                <h3>BIENVENIDO</h3>
+                <b class="patient-name"><?php echo $_SESSION['user']->name?></b>
+
+                <div class="options">
+                    <a href="<?php echo ROUTE_URL?>/Admin"><i class="fas fa-home"></i> Dashboard</a>
+                    <br><br>
+                    <a href="<?php echo ROUTE_URL?>/PatientPublic/logout"><i class="fas fa-sign-out-alt"></i> Cerrar sesión</a>
+                </div>
+            </div>
+            <?php endif;?>
         </div>
         <div class="chat-title">
             <span>Viernes</span>
             <i class="fas fa-bars"></i>
         </div>
         <div class="chat-message-list" id="chat-message-list">
+        <?php if ($parameters['login'] == 1):?>
+            <div class="message-row you-message">
+                <div class="message-content">
+                    <div class="message-text"> <a style="cursor:pointer" class="text-white" onclick="load_history()"><i class="fas fa-redo"></i> Cargar mensajes anteriores    </a> </div>
+                    <div class="message-time">17:49</div>
+                </div>
+            </div>
+            <?php endif;?>
             <?php echo $parameters['message'] ?>
         </div>
         <div class="chat-form">
@@ -76,5 +96,4 @@
     <script src="js/utf8.js"></script>
     <script src="js/main.js"></script>
 </body>
-
 </html>

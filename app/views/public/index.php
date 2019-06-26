@@ -39,8 +39,29 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <h4>Información personal</h4>
-                        <hr>
+                        <h4>Mis Datos</h4>
+                        <div class="card-body">
+                           <div class="row">
+                                <div class="col-md-6">
+                                    <p>Información personal</p>
+                                    <hr>
+                                    <p><b>Nombre: </b> <?php echo $_SESSION['patient']->name. ' '.$_SESSION['patient']->last_name?></p>
+                                    <p><b>Sexo: </b> <?php echo $var = ($_SESSION['patient']->gender == '1')? 'Hombre' : 'Mujer'?></p>
+                                    <p><b>Fecha de nacimiento: </b> <?php echo date_format(new DateTime($_SESSION['patient']->birthdate), 'd-m-Y')?></p>
+                                    <!-- <p><b>Edad: </b><?php echo $_SESSION['patient']->age?> años</p> -->
+                                    <p><b>Correo: </b><?php echo $_SESSION['patient']->email?></p>
+                                </div>
+                                <div class="col-md-6">
+                                <p>Evaluación psicológica</p>
+                                    <hr>
+                                    <p><b>Personalidad: </b> <?php echo $var = ($_SESSION['patient']->personality == ' ')? 'Aun no determinada' : $_SESSION['patient']->personality ?></p>
+                                    <p><b>Carácter: </b> <?php echo $var = ($_SESSION['patient']->character == ' ')? 'Aun no determinado' : $_SESSION['patient']->character ?></p>
+                                    <p><b>Coeficiente intelectual: </b> <?php echo $var = ($_SESSION['patient']->ci == ' ')? 'Aun no determinado' : $_SESSION['patient']->ci ?></p>
+                                </div>
+                           </div>
+                           <br>
+                           <br>
+                        </div>
 
                         <h4>Opciones</h4>
                         <hr>
@@ -49,13 +70,13 @@
                                 <a href="<?php echo ROUTE_URL?>/" class="btn btn-primary btn-block">Ir al chat <i class="fas fa-comments"></i></a>
                             </div>
                             <div class="col-md-4">
-                                <a href="#" class="btn btn-success btn-block">Modificar <i class="fas fa-user-edit"></i> </a>
+                                <a href="<?php echo ROUTE_URL?>/PatientPublic/update_acount/<?php echo $_SESSION['patient']->id_patient?>" class="btn btn-success btn-block">Modificar <i class="fas fa-user-edit"></i> </a>
                             </div>
                             <div class="col-md-4">
-                                <a href="#" class="btn btn-info btn-block">Cambiar contraseña <i class="fas fa-key"></i></a>
+                                <a href="<?php echo ROUTE_URL?>/PatientPublic/update_passwordAcount/<?php echo $_SESSION['patient']->id_patient?>" class="btn btn-info btn-block">Cambiar contraseña <i class="fas fa-key"></i></a>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>
